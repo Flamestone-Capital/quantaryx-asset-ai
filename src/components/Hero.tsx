@@ -87,12 +87,6 @@ const Hero = () => {
   const handleFeatureClick = (index: number) => {
     setActiveFeature(index);
     setShowAIInsight(true);
-    
-    if (AIFeatures[index].title === "自動投資優化") {
-      setShowSimulator(true);
-    } else {
-      setShowSimulator(false);
-    }
   };
 
   const handleAdvancedFeatureClick = (feature: any) => {

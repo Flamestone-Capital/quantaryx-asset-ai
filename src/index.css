@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 254 82% 75%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 30% 10%;
+    --foreground: 220 40% 98%;
+
+    --card: 222 25% 15%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 222 25% 14%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 254 82% 75%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 218 30% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 215 28% 20%;
+    --muted-foreground: 210 38% 90%;
+
+    --accent: 254 60% 30%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 25% 25%;
+    --input: 215 25% 25%;
+    --ring: 254 65% 85%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 220 30% 12%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 254 75% 75%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 218 35% 18%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 215 25% 20%;
+    --sidebar-ring: 254 75% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+/* Custom gradients */
+.gradient-hero {
+  @apply bg-gradient-to-br from-quantaryx-purple/90 to-quantaryx-darkblue;
+}
+
+.gradient-card {
+  @apply bg-gradient-to-br from-quantaryx-softblue/30 to-white dark:from-[#9b87f5]/40 dark:to-[#141824]/95;
+}
+
+.text-gradient {
+  @apply bg-gradient-to-r from-quantaryx-purple to-quantaryx-brightblue bg-clip-text text-transparent;
+}
+
+.bg-grid {
+  @apply dark:bg-gray-900 dark:bg-opacity-70;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+}
+
+.dark .bg-grid {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.1)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+}
+
+/* 深色模式下全局颜色覆盖 */
+.dark {
+  color-scheme: dark;
+}
+
+/* 确保深色模式下图表坐标轴和刻度文字可见 */
+.dark .recharts-cartesian-axis-tick-value {
+  fill: #ffffff !important;
+}
+
+.dark .recharts-text,
+.dark .recharts-label {
+  fill: #ffffff !important;
+}
+
+/* 确保深色模式下文字可见 */
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark h4, 
+.dark h5,
+.dark h6 {
+  color: #ffffff !important;
+}
+
+/* 强制深色背景应用 */
+.dark body {
+  background-color: hsl(220 30% 10%) !important;
+}
+
+.dark .bg-white {
+  background-color: hsl(220 30% 12%) !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: hsl(220 30% 8%) !important;
+}
+
+/* 强制深色文本颜色 */
+.dark .text-gray-900 {
+  color: hsl(0 0% 100%) !important;
+}
+
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-gray-700 {
+  color: hsl(220 15% 80%) !important;
+}
+
+/* 强制边框颜色 */
+.dark .border-gray-100 {
+  border-color: hsl(215 25% 25%) !important;
+}
+
+/* 强制背景颜色 */
+.dark .bg-gray-100 {
+  background-color: hsl(220 20% 20%) !important;
+}
+
+.dark .hover\:bg-gray-50:hover {
+  background-color: hsl(220 20% 15%) !important;
+}

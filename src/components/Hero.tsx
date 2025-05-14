@@ -87,6 +87,12 @@ const Hero = () => {
   const handleFeatureClick = (index: number) => {
     setActiveFeature(index);
     setShowAIInsight(true);
+    
+    if (AIFeatures[index].title === "自動投資優化") {
+      setShowSimulator(true);
+    } else {
+      setShowSimulator(false);
+    }
   };
 
   const handleAdvancedFeatureClick = (feature: any) => {
@@ -265,8 +271,8 @@ const Hero = () => {
             <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
               <div className="relative block w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
                 {!showSimulator ? (
-                  <div className="w-full h-auto bg-gradient-to-br from-quantaryx-purple/50 to-quantaryx-brightblue/30 dark:from-quantaryx-dark-purple/40 dark:to-quantaryx-dark-blue/30 rounded-lg p-6">
-                    <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl animate-float p-6">
+                  <div className="w-full h-[450px] bg-gradient-to-br from-quantaryx-purple/50 to-quantaryx-brightblue/30 dark:from-quantaryx-dark-purple/40 dark:to-quantaryx-dark-blue/30 rounded-lg p-6">
+                    <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl animate-float p-6 h-full">
                       <div className="flex justify-between items-center mb-4">
                         <div className="flex items-center space-x-2">
                           <div className="w-3 h-3 bg-quantaryx-green dark:bg-quantaryx-dark-green rounded-full"></div>
@@ -314,7 +320,9 @@ const Hero = () => {
                     </div>
                   </div>
                 ) : (
-                  <Simulator />
+                  <div className="w-full h-[450px]">
+                    <Simulator />
+                  </div>
                 )}
               </div>
             </div>

@@ -13,7 +13,7 @@ const InvestorSection = () => {
   ];
 
   return (
-    <div className="py-20 bg-gradient-to-br from-quantaryx-darkblue to-quantaryx-purple/90 text-white">
+    <div className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
           <div className="mb-10 lg:mb-0">
@@ -28,7 +28,7 @@ const InvestorSection = () => {
               <ul className="space-y-4 text-left mb-8">
                 {investorBenefits.map((benefit, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="h-5 w-5 rounded-full flex items-center justify-center mt-0.5 mr-3 bg-white text-quantaryx-purple">
+                    <span className="h-5 w-5 rounded-full flex items-center justify-center mt-0.5 mr-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                       <Check className="h-3 w-3" />
                     </span>
                     <span>{benefit}</span>
@@ -38,14 +38,14 @@ const InvestorSection = () => {
             </div>
             
             <div className="opacity-0 animate-fade-in animate-delay-300">
-              <Button className="bg-white text-quantaryx-purple hover:bg-white/90">
+              <Button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700">
                 投資者資料包
               </Button>
             </div>
           </div>
           
           <div className="lg:pl-10 opacity-0 animate-fade-in animate-delay-400">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
+            <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-8 border border-gray-700">
               <h3 className="text-2xl font-bold mb-6 text-left">市場機會</h3>
               
               <div className="space-y-6 text-left">
@@ -55,7 +55,7 @@ const InvestorSection = () => {
                     <span className="font-bold">$80+ 兆美元</span>
                   </div>
                   <div className="w-full h-2 bg-white/20 rounded-full">
-                    <div className="h-2 bg-white rounded-full" style={{ width: "85%" }}></div>
+                    <div className="h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" style={{ width: "85%" }}></div>
                   </div>
                 </div>
                 
@@ -65,7 +65,7 @@ const InvestorSection = () => {
                     <span className="font-bold">$5.9+ 兆美元</span>
                   </div>
                   <div className="w-full h-2 bg-white/20 rounded-full">
-                    <div className="h-2 bg-white rounded-full" style={{ width: "65%" }}></div>
+                    <div className="h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-500" style={{ width: "65%" }}></div>
                   </div>
                 </div>
                 
@@ -75,7 +75,7 @@ const InvestorSection = () => {
                     <span className="font-bold">23.4%</span>
                   </div>
                   <div className="w-full h-2 bg-white/20 rounded-full">
-                    <div className="h-2 bg-white rounded-full" style={{ width: "40%" }}></div>
+                    <div className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" style={{ width: "40%" }}></div>
                   </div>
                 </div>
                 
@@ -85,7 +85,7 @@ const InvestorSection = () => {
                     <span className="font-bold">$4.2+ 兆美元</span>
                   </div>
                   <div className="w-full h-2 bg-white/20 rounded-full">
-                    <div className="h-2 bg-white rounded-full" style={{ width: "75%" }}></div>
+                    <div className="h-2 rounded-full bg-gradient-to-r from-indigo-400 to-purple-600" style={{ width: "75%" }}></div>
                   </div>
                 </div>
               </div>

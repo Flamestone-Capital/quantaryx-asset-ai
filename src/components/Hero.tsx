@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Brain, ArrowRight, Activity, ChartBar, Database, Search, Briefcase, TrendingUp, BarChart3, ChartPie, Repeat } from 'lucide-react';
 import { ChartContainer } from '@/components/ui/chart';
@@ -14,6 +14,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { advancedFeatures } from './hero/constants';
 import Simulator from './Simulator';
+import DataIntegrationVisual from './DataIntegrationVisual';
 
 const mockData = [
   { month: '1月', value: 40 },
@@ -83,15 +84,33 @@ const Hero = () => {
   const [showAIInsight, setShowAIInsight] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [showSimulator, setShowSimulator] = useState(false);
+  const [chartType, setChartType] = useState('bar'); // 'bar', 'line', 'pie', 'advanced'
+  const [showDataIntegration, setShowDataIntegration] = useState(false);
 
   const handleFeatureClick = (index: number) => {
     setActiveFeature(index);
     setShowAIInsight(true);
     
-    if (AIFeatures[index].title === "自動投資優化") {
-      setShowSimulator(true);
-    } else {
-      setShowSimulator(false);
+    // Reset all special views first
+    setShowSimulator(false);
+    setShowDataIntegration(false);
+    
+    // Change chart type based on the selected feature
+    switch(index) {
+      case 0: // 智慧資產分析
+        setChartType('bar');
+        break;
+      case 1: // 自動投資優化
+        setShowSimulator(true);
+        break;
+      case 2: // 智能資料整合
+        setShowDataIntegration(true);
+        break;
+      case 3: // 投資機會識別
+        setChartType('advanced');
+        break;
+      default:
+        setChartType('bar');
     }
   };
 
@@ -270,7 +289,15 @@ const Hero = () => {
           <div className="opacity-0 animate-fade-in animate-delay-700 mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
             <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
               <div className="relative block w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
-                {!showSimulator ? (
+                {showSimulator ? (
+                  <div className="w-full h-[450px]">
+                    <Simulator />
+                  </div>
+                ) : showDataIntegration ? (
+                  <div className="w-full h-[450px]">
+                    <DataIntegrationVisual />
+                  </div>
+                ) : (
                   <div className="w-full h-[450px] bg-gradient-to-br from-quantaryx-purple/50 to-quantaryx-brightblue/30 dark:from-quantaryx-dark-purple/40 dark:to-quantaryx-dark-blue/30 rounded-lg p-6">
                     <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl animate-float p-6 h-full">
                       <div className="flex justify-between items-center mb-4">
@@ -282,25 +309,7 @@ const Hero = () => {
                       </div>
 
                       <div className="h-60 w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={mockData} barSize={20}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.2} stroke="var(--border)" />
-                            <XAxis dataKey="month" fontSize={10} tickLine={false} axisLine={false} tick={{ fill: '#ffffff' }} />
-                            <YAxis hide />
-                            <Tooltip 
-                              formatter={(value) => [`$${Number(value).toLocaleString()}`, '淨值']}
-                              labelStyle={{ color: '#ffffff', fontWeight: 'bold' }}
-                              itemStyle={{ color: '#ffffff', fontWeight: 'bold' }}
-                              cursor={{fill: 'rgba(155, 135, 245, 0.3)'}}
-                              contentStyle={{ backgroundColor: 'rgba(42, 47, 65, 0.95)', borderColor: '#4a5568', color: '#ffffff' }}
-                            />
-                            <Bar 
-                              dataKey="value" 
-                              fill="#9b87f5"
-                              radius={[4, 4, 0, 0]}
-                            />
-                          </BarChart>
-                        </ResponsiveContainer>
+                        {renderChart(chartType)}
                       </div>
                       
                       {showAIInsight && (
@@ -318,10 +327,6 @@ const Hero = () => {
                         </div>
                       )}
                     </div>
-                  </div>
-                ) : (
-                  <div className="w-full h-[450px]">
-                    <Simulator />
                   </div>
                 )}
               </div>

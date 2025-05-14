@@ -16,6 +16,7 @@ const Products = () => {
         "資產變動 AI 預警系統：主動告知風險或錯誤配置"
       ],
       color: "bg-blue-500",
+      linkUrl: "https://finora.cc/"
     },
     {
       title: "Wiselens",
@@ -28,6 +29,7 @@ const Products = () => {
         "一鍵下單 + API 串接券商/銀行：直接執行"
       ],
       color: "bg-purple-500",
+      linkUrl: "https://wiselens.netlify.app/"
     },
     {
       title: "NuroCRM",
@@ -40,6 +42,7 @@ const Products = () => {
         "會前摘要 & 客戶個性報告自動生成"
       ],
       color: "bg-green-500",
+      linkUrl: "https://nuro-crm.netlify.app/"
     },
     {
       title: "DealLens",
@@ -52,6 +55,7 @@ const Products = () => {
         "可操作的投資紀錄系統：完整節點管理"
       ],
       color: "bg-orange-500",
+      linkUrl: "https://wonderful-zabaione-cf15f8.netlify.app/"
     }
   ];
 
@@ -77,6 +81,7 @@ const Products = () => {
               features={product.features}
               color={product.color}
               index={index}
+              linkUrl={product.linkUrl}
             />
           ))}
         </div>

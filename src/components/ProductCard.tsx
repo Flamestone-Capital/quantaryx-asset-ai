@@ -8,9 +8,10 @@ interface ProductCardProps {
   features: string[];
   color: string;
   index: number;
+  linkUrl?: string; // 可选的链接URL属性
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, features, color, index }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, features, color, index, linkUrl }) => {
   const delay = 100 * (index + 1);
   
   return (
@@ -18,17 +19,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, featur
       className={`opacity-0 animate-fade-in`} 
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="h-full gradient-card rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+      <div className="h-full gradient-card rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-700 bg-gray-800/90 hover:bg-gray-800">
         <div className="p-6">
           <div className={`inline-flex items-center justify-center p-3 rounded-full mb-4 ${color}`}>
             {icon}
           </div>
           
           <h3 className="text-xl font-bold mb-1 flex items-center">
-            <span className="text-quantaryx-darkblue">{title}</span>
+            <span 
+              className={`text-white font-medium ${linkUrl ? 'cursor-pointer hover:text-gray-200' : ''}`}
+              onClick={linkUrl ? () => window.open(linkUrl, '_blank') : undefined}
+            >
+              {title}
+            </span>
           </h3>
           
-          <p className="text-gray-500 italic mb-4 text-sm">{subtitle}</p>
+          <p className="text-gray-300 italic mb-4 text-sm">{subtitle}</p>
           
           <ul className="space-y-2 text-left">
             {features.map((feature, i) => (
@@ -38,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, featur
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </span>
-                <span className="text-sm">{feature}</span>
+                <span className="text-sm text-gray-200">{feature}</span>
               </li>
             ))}
           </ul>

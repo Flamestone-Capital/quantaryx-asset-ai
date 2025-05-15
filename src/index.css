@@ -4,6 +4,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 脉冲动画效果 */
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-delayed {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.pulse-circle {
+  transform-origin: center;
+  animation: pulse 1.5s infinite ease-out;
+}
+
+.pulse-circle-delayed {
+  transform-origin: center;
+  animation: pulse-delayed 1.5s infinite ease-out;
+  animation-delay: 0.5s;
+}
+
 @layer utilities {
   .custom-scrollbar {
     scrollbar-width: thin;

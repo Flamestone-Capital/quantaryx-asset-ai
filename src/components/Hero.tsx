@@ -15,6 +15,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { advancedFeatures } from './hero/constants';
 import Simulator from './Simulator';
 import DataIntegrationVisual from './DataIntegrationVisual';
+import EnhancedTradingSignalBoard from './EnhancedTradingSignalBoard';
 
 const mockData = [
   { month: '1月', value: 40 },
@@ -182,15 +183,9 @@ const Hero = () => {
         </ResponsiveContainer>
       );
     } else if (chartType === 'advanced') {
-      return (
-        <div className="p-2 bg-quantaryx-softblue/20 dark:bg-quantaryx-dark-purple/10 rounded-lg h-full flex flex-col justify-center items-center">
-          <Brain className="h-12 w-12 text-quantaryx-purple dark:text-quantaryx-dark-purple mb-2 animate-pulse" />
-          <div className="text-center">
-            <p className="font-medium text-quantaryx-darkblue dark:text-white">AI 正在分析您的投資組合</p>
-            <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">發現潛在機會與風險...</p>
-          </div>
-        </div>
-      );
+      // 直接返回EnhancedTradingSignalBoard组件，不添加任何额外的文本或标签
+      return <EnhancedTradingSignalBoard />;
+    
     } else {
       return (
         <ResponsiveContainer width="100%" height="100%">
@@ -300,31 +295,39 @@ const Hero = () => {
                 ) : (
                   <div className="w-full h-[450px] bg-gradient-to-br from-quantaryx-purple/50 to-quantaryx-brightblue/30 dark:from-quantaryx-dark-purple/40 dark:to-quantaryx-dark-blue/30 rounded-lg p-6">
                     <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl animate-float p-6 h-full">
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-3 h-3 bg-quantaryx-green dark:bg-quantaryx-dark-green rounded-full"></div>
-                          <span className="text-sm font-medium dark:text-white">資產總覽</span>
+                      {/* 如果是投資機會識別功能，则只显示图表，不显示额外的文本 */}
+                      {AIFeatures[activeFeature].title === "投資機會識別" ? (
+                        <div className="h-full w-full">
+                          {renderChart(chartType)}
                         </div>
-                        <span className="text-2xl font-bold dark:text-white">$5.43M</span>
-                      </div>
-
-                      <div className="h-60 w-full">
-                        {renderChart(chartType)}
-                      </div>
-                      
-                      {showAIInsight && (
-                        <div className="mt-3 p-3 bg-quantaryx-softblue/20 dark:bg-quantaryx-dark-purple/20 rounded-lg border border-quantaryx-softblue/30 dark:border-quantaryx-dark-purple/50 animate-fade-in text-left">
-                          <div className="flex items-center mb-1">
-                            <Brain className="h-4 w-4 text-quantaryx-purple dark:text-quantaryx-dark-purple mr-2" />
-                            <span className="text-sm font-medium text-quantaryx-darkblue dark:text-white">AI 智能洞察</span>
+                      ) : (
+                        <>
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center">
+                              <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                              <span className="text-sm font-medium dark:text-white">資產總覽</span>
+                            </div>
+                            <span className="text-2xl font-bold dark:text-white">$5.43M</span>
                           </div>
-                          <p className="text-xs text-gray-600 dark:text-gray-300">
-                            {AIFeatures[activeFeature].title === "智慧資產分析" && "分析顯示您的資產在8月達到高峰，建議關注流動性分配以優化年底稅務籌劃。"}
-                            {AIFeatures[activeFeature].title === "自動投資優化" && "根據您的風險偏好與市場波動，AI推薦增加10%的防禦性資產以平衡投資組合。"}
-                            {AIFeatures[activeFeature].title === "智能資料整合" && "系統已自動整合12個金融機構的資料，並識別出3個重複計算的資產項目。"}
-                            {AIFeatures[activeFeature].title === "投資機會識別" && "AI檢測到5檔符合您投資風格的高潛力標的，點擊查看詳細分析報告。"}
-                          </p>
-                        </div>
+
+                          <div className="h-60 w-full">
+                            {renderChart(chartType)}
+                          </div>
+                          
+                          {showAIInsight && (
+                            <div className="mt-3 p-3 bg-quantaryx-softblue/20 dark:bg-quantaryx-dark-purple/20 rounded-lg border border-quantaryx-softblue/30 dark:border-quantaryx-dark-purple/50 animate-fade-in text-left">
+                              <div className="flex items-center mb-1">
+                                <Brain className="h-4 w-4 text-quantaryx-purple dark:text-quantaryx-dark-purple mr-2" />
+                                <span className="text-sm font-medium text-quantaryx-darkblue dark:text-white">AI 智能洞察</span>
+                              </div>
+                              <p className="text-xs text-gray-600 dark:text-gray-300">
+                                {AIFeatures[activeFeature].title === "智慧資產分析" && "分析顯示您的資產在8月達到高峰，建議關注流動性分配以優化年底稅務籌劃。"}
+                                {AIFeatures[activeFeature].title === "自動投資優化" && "根據您的風險偏好與市場波動，AI推薦增加10%的防禦性資產以平衡投資組合。"}
+                                {AIFeatures[activeFeature].title === "智能資料整合" && "系統已自動整合12個金融機構的資料，並識別出3個重複計算的資產項目。"}
+                              </p>
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>

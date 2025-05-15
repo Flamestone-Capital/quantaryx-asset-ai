@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductCardProps {
   title: string;
@@ -13,6 +14,15 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, features, color, index, linkUrl }) => {
   const delay = 100 * (index + 1);
+  const [showPopup, setShowPopup] = useState(false);
+  
+  const handleTitleClick = () => {
+    if (title === "Wiselens") {
+      setShowPopup(true);
+    } else if (linkUrl) {
+      window.open(linkUrl, '_blank');
+    }
+  };
   
   return (
     <div 

@@ -1,11 +1,74 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, X, Tag } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
+import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
+
+const PricingPopup = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+  
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/70 z-[9999] flex items-center justify-center p-4"
+          onClick={onClose}
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+        >
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md w-full relative shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            
+            <div className="bg-quantaryx-purple w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto text-white">
+              <Tag className="h-8 w-8" />
+            </div>
+            
+            <h3 className="text-2xl font-bold mb-4 text-center dark:text-white">定價方案</h3>
+            <p className="text-xl mb-6 text-center text-gray-600 dark:text-gray-300">
+              即將上線，敬請期待
+            </p>
+            
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+              <p className="text-sm text-gray-600 dark:text-gray-300 text-center">
+                我們正在為不同規模的客戶打造靈活的訂閱方案。請填寫聯繫表單以獲取最新定價信息。
+              </p>
+            </div>
+            
+            <Button 
+              onClick={() => {
+                onClose();
+                const contactForm = document.getElementById('contact-form');
+                contactForm?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="bg-quantaryx-purple hover:bg-quantaryx-purple/90 text-white w-full py-6"
+            >
+              獲取定制方案
+            </Button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+};
 
 const CTA = () => {
   const { toast } = useToast();
+  const [showPricingPopup, setShowPricingPopup] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,13 +130,7 @@ const CTA = () => {
                 <ArrowRight className="h-4 w-4" />
               </Button>
               <Button 
-                onClick={() => {
-                  window.open('/pricing', '_blank');
-                  toast({
-                    title: "定價資訊",
-                    description: "正在為您準備最新的定價方案",
-                  });
-                }}
+                onClick={() => setShowPricingPopup(true)}
                 variant="outline" 
                 className="border-quantaryx-darkblue text-quantaryx-darkblue hover:bg-quantaryx-darkblue/10"
               >
@@ -158,6 +215,11 @@ const CTA = () => {
           </div>
         </div>
       </div>
+      
+      <PricingPopup 
+        isOpen={showPricingPopup} 
+        onClose={() => setShowPricingPopup(false)}
+      />
     </div>
   );
 }

@@ -1,9 +1,65 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
+
+const InvestorPopup = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+  
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/70 z-[9999] flex items-center justify-center p-4"
+          onClick={onClose}
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+        >
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md w-full relative shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+            </div>
+            
+            <h3 className="text-2xl font-bold mb-4 text-center dark:text-white">投資者資料</h3>
+            <p className="text-xl mb-6 text-center text-gray-600 dark:text-gray-300">
+              即將上線，敬請期待
+            </p>
+            
+            <Button 
+              onClick={onClose}
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white w-full py-6 hover:from-blue-600 hover:to-purple-700"
+            >
+              我知道了
+            </Button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+};
 
 const InvestorSection = () => {
+  const [showPopup, setShowPopup] = useState(false);
+  
   const investorBenefits = [
     "革命性 AI 資產管理技術，重新定義財富管理市場",
     "龐大高凈值個人與機構投資者客戶群體",
@@ -13,7 +69,7 @@ const InvestorSection = () => {
   ];
 
   return (
-    <div className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div id="investors" className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
           <div className="mb-10 lg:mb-0">
@@ -38,7 +94,10 @@ const InvestorSection = () => {
             </div>
             
             <div className="opacity-0 animate-fade-in animate-delay-300">
-              <Button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700">
+              <Button 
+                onClick={() => setShowPopup(true)}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+              >
                 投資者資料包
               </Button>
             </div>
@@ -93,6 +152,11 @@ const InvestorSection = () => {
           </div>
         </div>
       </div>
+      
+      <InvestorPopup 
+        isOpen={showPopup} 
+        onClose={() => setShowPopup(false)} 
+      />
     </div>
   );
 }

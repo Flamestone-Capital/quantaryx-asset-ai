@@ -69,14 +69,17 @@ const InvestorSection = () => {
   ];
 
   return (
-    <div id="investors" className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="investors" className="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 text-slate-800 dark:text-white relative overflow-hidden">
+      {/* 背景纹理 */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.05)_1px,transparent_0)] [background-size:20px_20px] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)]"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
           <div className="mb-10 lg:mb-0">
             <h2 className="text-3xl font-bold mb-6 text-left opacity-0 animate-fade-in">
               投資機會
             </h2>
-            <p className="text-xl mb-8 text-white/80 text-left opacity-0 animate-fade-in animate-delay-100">
+            <p className="text-xl mb-8 text-slate-600 dark:text-white/80 text-left opacity-0 animate-fade-in animate-delay-100">
               QuantaryX 正在尋求下一輪融資以加速產品開發與市場擴張。我們邀請有遠見的投資者成為重新定義資產管理未來的一部分。
             </p>
             
@@ -87,7 +90,7 @@ const InvestorSection = () => {
                     <span className="h-5 w-5 rounded-full flex items-center justify-center mt-0.5 mr-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                       <Check className="h-3 w-3" />
                     </span>
-                    <span>{benefit}</span>
+                    <span className="text-slate-700 dark:text-white">{benefit}</span>
                   </li>
                 ))}
               </ul>
@@ -96,7 +99,7 @@ const InvestorSection = () => {
             <div className="opacity-0 animate-fade-in animate-delay-300">
               <Button 
                 onClick={() => setShowPopup(true)}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow-lg"
               >
                 投資者資料包
               </Button>
@@ -104,46 +107,46 @@ const InvestorSection = () => {
           </div>
           
           <div className="lg:pl-10 opacity-0 animate-fade-in animate-delay-400">
-            <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-8 border border-gray-700">
-              <h3 className="text-2xl font-bold mb-6 text-left">市場機會</h3>
+            <div className="bg-white/90 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-8 border border-indigo-200 dark:border-gray-700 shadow-xl shadow-indigo-900/5 dark:shadow-none">
+              <h3 className="text-2xl font-bold mb-6 text-left text-slate-800 dark:text-white">市場機會</h3>
               
               <div className="space-y-6 text-left">
                 <div>
                   <div className="flex justify-between mb-1">
-                    <span className="font-medium">全球高凈值個人市場</span>
-                    <span className="font-bold">$80+ 兆美元</span>
+                    <span className="font-medium text-slate-700 dark:text-white">全球高凈值個人市場</span>
+                    <span className="font-bold text-slate-800 dark:text-white">$80+ 兆美元</span>
                   </div>
-                  <div className="w-full h-2 bg-white/20 rounded-full">
+                  <div className="w-full h-2 bg-slate-200 dark:bg-white/20 rounded-full">
                     <div className="h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" style={{ width: "85%" }}></div>
                   </div>
                 </div>
                 
                 <div>
                   <div className="flex justify-between mb-1">
-                    <span className="font-medium">家族辦公室管理資產</span>
-                    <span className="font-bold">$5.9+ 兆美元</span>
+                    <span className="font-medium text-slate-700 dark:text-white">家族辦公室管理資產</span>
+                    <span className="font-bold text-slate-800 dark:text-white">$5.9+ 兆美元</span>
                   </div>
-                  <div className="w-full h-2 bg-white/20 rounded-full">
+                  <div className="w-full h-2 bg-slate-200 dark:bg-white/20 rounded-full">
                     <div className="h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-500" style={{ width: "65%" }}></div>
                   </div>
                 </div>
                 
                 <div>
                   <div className="flex justify-between mb-1">
-                    <span className="font-medium">金融科技年增長率</span>
-                    <span className="font-bold">23.4%</span>
+                    <span className="font-medium text-slate-700 dark:text-white">金融科技年增長率</span>
+                    <span className="font-bold text-slate-800 dark:text-white">23.4%</span>
                   </div>
-                  <div className="w-full h-2 bg-white/20 rounded-full">
+                  <div className="w-full h-2 bg-slate-200 dark:bg-white/20 rounded-full">
                     <div className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" style={{ width: "40%" }}></div>
                   </div>
                 </div>
                 
                 <div>
                   <div className="flex justify-between mb-1">
-                    <span className="font-medium">AI 財富管理市場潛力</span>
-                    <span className="font-bold">$4.2+ 兆美元</span>
+                    <span className="font-medium text-slate-700 dark:text-white">AI 財富管理市場潛力</span>
+                    <span className="font-bold text-slate-800 dark:text-white">$4.2+ 兆美元</span>
                   </div>
-                  <div className="w-full h-2 bg-white/20 rounded-full">
+                  <div className="w-full h-2 bg-slate-200 dark:bg-white/20 rounded-full">
                     <div className="h-2 rounded-full bg-gradient-to-r from-indigo-400 to-purple-600" style={{ width: "75%" }}></div>
                   </div>
                 </div>

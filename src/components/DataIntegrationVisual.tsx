@@ -1,39 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Brain, FileText, FileImage, FileSpreadsheet, FileBarChart, Database, ChartPie, BarChart3, ArrowRight, Receipt, FileType, MoveRight, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const DataIntegrationVisual = () => {
   // Animation state
   const [currentStep, setCurrentStep] = useState(1); // 1: Unstructured, 2: Processing, 3: Structured
+  const timersRef = useRef([]);
+
+  // 清理定时器的函数
+  const clearAllTimers = useCallback(() => {
+    timersRef.current.forEach(timer => clearTimeout(timer));
+    timersRef.current = [];
+  }, []);
 
   useEffect(() => {
     // Function to run the complete animation cycle
     const runAnimationCycle = () => {
+      // 清理之前的定时器
+      clearAllTimers();
+      
       // Step 1 is already set initially
       
-      // Move to step 2 (processing) after 3 seconds
+      // Move to step 2 (processing) after 2 seconds (减少等待时间)
       const step2Timer = setTimeout(() => {
         setCurrentStep(2);
         
-        // Move to step 3 (results) after 4 more seconds
+        // Move to step 3 (results) after 2.5 more seconds
         const step3Timer = setTimeout(() => {
           setCurrentStep(3);
           
-          // Reset back to step 1 after 4 more seconds to complete the cycle
+          // Reset back to step 1 after 3 more seconds to complete the cycle
           const resetTimer = setTimeout(() => {
             setCurrentStep(1);
             
             // Run the cycle again
             runAnimationCycle();
-          }, 4000);
+          }, 3000);
           
-          return () => clearTimeout(resetTimer);
-        }, 4000);
+          timersRef.current.push(resetTimer);
+        }, 2500);
         
-        return () => clearTimeout(step3Timer);
-      }, 3000);
+        timersRef.current.push(step3Timer);
+      }, 2000);
       
-      return () => clearTimeout(step2Timer);
+      timersRef.current.push(step2Timer);
     };
     
     // Start the animation cycle
@@ -41,18 +51,18 @@ const DataIntegrationVisual = () => {
     
     // Cleanup function
     return () => {
-      // Cleanup is handled by the nested returns in runAnimationCycle
+      clearAllTimers();
     };
-  }, []);
+  }, [clearAllTimers]);
 
   // Source documents with random slight rotations
   const sourceDocuments = [
-    { icon: <FileText className="text-blue-400" />, name: "財務報表.pdf", rotation: -5 },
-    { icon: <FileImage className="text-yellow-400" />, name: "發票掃描.jpg", rotation: 3 },
-    { icon: <FileSpreadsheet className="text-green-400" />, name: "數據表格.xlsx", rotation: -2 },
-    { icon: <FileBarChart className="text-purple-400" />, name: "分析圖表.csv", rotation: 4 },
-    { icon: <Receipt className="text-orange-400" />, name: "收據影像.png", rotation: -3 },
-    { icon: <FileType className="text-red-400" />, name: "手寫筆記.jpg", rotation: 6 }
+    { icon: <FileText className="text-blue-500 dark:text-blue-400" />, name: "財務報表.pdf", rotation: -5 },
+    { icon: <FileImage className="text-yellow-500 dark:text-yellow-400" />, name: "發票掃描.jpg", rotation: 3 },
+    { icon: <FileSpreadsheet className="text-green-500 dark:text-green-400" />, name: "數據表格.xlsx", rotation: -2 },
+    { icon: <FileBarChart className="text-purple-500 dark:text-purple-400" />, name: "分析圖表.csv", rotation: 4 },
+    { icon: <Receipt className="text-orange-500 dark:text-orange-400" />, name: "收據影像.png", rotation: -3 },
+    { icon: <FileType className="text-red-500 dark:text-red-400" />, name: "手寫筆記.jpg", rotation: 6 }
   ];
 
   // Table data for the structured result
@@ -84,10 +94,10 @@ const DataIntegrationVisual = () => {
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -100 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      <h3 className="text-white text-lg font-semibold mb-2">未結構化資料</h3>
-      <p className="text-gray-300 text-xs mb-3 text-center max-w-md">
+      <h3 className="text-slate-800 dark:text-white text-lg font-semibold mb-2">未結構化資料</h3>
+      <p className="text-slate-600 dark:text-gray-300 text-xs mb-3 text-center max-w-md">
         各種不同格式的原始資料需要整合處理，包括文檔、圖像、表格等非結構化數據
       </p>
       
@@ -95,24 +105,22 @@ const DataIntegrationVisual = () => {
         {sourceDocuments.map((doc, index) => (
           <motion.div 
             key={index}
-            className="relative bg-gray-800/80 rounded-lg border border-gray-700 p-2 flex flex-col items-center justify-center shadow-lg"
+            className="relative bg-white dark:bg-gray-800/80 rounded-lg border border-slate-200 dark:border-gray-700 p-2 flex flex-col items-center justify-center shadow-lg"
             style={{ height: '90px', width: '90px', rotate: `${doc.rotation}deg` }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ 
               opacity: 1, 
               y: 0,
-              x: index % 2 === 0 ? [0, -3, 0, 3, 0] : [0, 3, 0, -3, 0],
-              y: index % 3 === 0 ? [0, 3, 0, -3, 0] : [0, -3, 0, 3, 0]
+              x: index % 2 === 0 ? [0, -2, 0, 2, 0] : [0, 2, 0, -2, 0]
             }}
             transition={{ 
-              duration: 0.5, 
-              delay: 0.1 * index,
-              x: { repeat: Infinity, duration: 3 + index * 0.5, ease: "easeInOut" },
-              y: { repeat: Infinity, duration: 4 + index * 0.5, ease: "easeInOut" }
+              duration: 0.3, 
+              delay: 0.05 * index,
+              x: { repeat: Infinity, duration: 4 + index * 0.3, ease: "easeInOut" }
             }}
           >
             <div className="text-2xl mb-1">{doc.icon}</div>
-            <span className="text-xs text-gray-300 truncate w-full text-center">{doc.name}</span>
+            <span className="text-xs text-slate-600 dark:text-gray-300 truncate w-full text-center">{doc.name}</span>
           </motion.div>
         ))}
       </div>
@@ -127,31 +135,32 @@ const DataIntegrationVisual = () => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      <h3 className="text-white text-xl font-semibold mb-4">智能分析引擎</h3>
-      <p className="text-gray-300 text-sm mb-6 text-center max-w-md">
+      <h3 className="text-slate-800 dark:text-white text-xl font-semibold mb-4">智能分析引擎</h3>
+      <p className="text-slate-600 dark:text-gray-300 text-sm mb-6 text-center max-w-md">
         AI 引擎正在處理和分析未結構化數據，提取關鍵信息並轉換為結構化格式
       </p>
       
       <motion.div 
         className="relative w-64 h-64 flex items-center justify-center"
         animate={{ 
-          scale: [1, 1.05, 1],
-          rotate: [0, 2, 0, -2, 0]
+          scale: [1, 1.02, 1],
+          rotate: [0, 1, 0, -1, 0]
         }}
         transition={{ 
-          duration: 4, 
+          duration: 3, 
           repeat: Infinity,
-          repeatType: "reverse"
+          repeatType: "reverse",
+          ease: "easeInOut"
         }}
       >
         {/* Scanning circle */}
         <motion.div 
-          className="absolute w-full h-full rounded-full border-2 border-quantaryx-purple/30"
-          animate={{ scale: [0.8, 1.1, 0.8] }}
+          className="absolute w-full h-full rounded-full border-2 border-indigo-300 dark:border-quantaryx-purple/30"
+          animate={{ scale: [0.9, 1.05, 0.9] }}
           transition={{ 
-            duration: 3, 
+            duration: 2, 
             repeat: Infinity,
             ease: "easeInOut"
           }}
@@ -159,94 +168,69 @@ const DataIntegrationVisual = () => {
         
         {/* Pulsing glow effect */}
         <motion.div 
-          className="absolute w-40 h-40 rounded-full bg-quantaryx-purple/10"
+          className="absolute w-40 h-40 rounded-full bg-indigo-100 dark:bg-quantaryx-purple/10"
           style={{ 
             filter: 'blur(20px)'
           }}
           animate={{ 
-            opacity: [0.3, 0.7, 0.3],
-            scale: [0.8, 1.2, 0.8]
+            opacity: [0.3, 0.6, 0.3],
+            scale: [0.9, 1.1, 0.9]
           }}
           transition={{ 
-            duration: 3, 
+            duration: 2, 
             repeat: Infinity,
-            repeatType: "reverse"
+            repeatType: "reverse",
+            ease: "easeInOut"
           }}
         />
         
         {/* Scanning line */}
         <motion.div 
-          className="absolute w-full h-1 bg-gradient-to-r from-transparent via-quantaryx-purple/70 to-transparent"
+          className="absolute w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 dark:via-quantaryx-purple/70 to-transparent"
           animate={{ 
-            top: [0, '100%'],
-            opacity: [0.7, 0.3, 0.7]
+            top: ['10%', '90%'],
+            opacity: [0.6, 0.3, 0.6]
           }}
           transition={{ 
-            top: {
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            },
-            opacity: {
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut"
           }}
         />
         
-        {/* Neural network connections */}
-        {Array.from({ length: 8 }).map((_, index) => {
-          const angle = (index / 8) * Math.PI * 2;
-          const x = Math.cos(angle) * 60;
-          const y = Math.sin(angle) * 60;
+        {/* Simplified Neural network connections - 减少数量 */}
+        {Array.from({ length: 6 }).map((_, index) => {
+          const angle = (index / 6) * Math.PI * 2;
+          const x = Math.cos(angle) * 50;
+          const y = Math.sin(angle) * 50;
           
           return (
             <motion.div 
               key={index}
-              className="absolute w-1 h-1 bg-quantaryx-purple rounded-full"
+              className="absolute w-1 h-1 bg-indigo-500 dark:bg-quantaryx-purple rounded-full"
               style={{ 
                 left: `calc(50% + ${x}px)`,
                 top: `calc(50% + ${y}px)`
               }}
               animate={{ 
-                scale: [1, 1.5, 1],
-                opacity: [0.5, 1, 0.5]
+                scale: [1, 1.3, 1],
+                opacity: [0.4, 0.8, 0.4]
               }}
               transition={{ 
-                duration: 1 + (index * 0.2), 
+                duration: 1.5, 
                 repeat: Infinity,
                 repeatType: "reverse",
-                delay: index * 0.1
+                delay: index * 0.2
               }}
-            >
-              <motion.div 
-                className="absolute h-px"
-                style={{ 
-                  width: '60px',
-                  background: 'linear-gradient(90deg, rgba(155,135,245,0.7) 0%, rgba(155,135,245,0) 100%)',
-                  transformOrigin: '0 0',
-                  transform: `rotate(${angle + Math.PI}rad)`
-                }}
-                animate={{ 
-                  opacity: [0.2, 0.5, 0.2]
-                }}
-                transition={{ 
-                  duration: 1.5, 
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  delay: index * 0.1
-                }}
-              />
-            </motion.div>
+            />
           );
         })}
         
         {/* Brain icon in the center */}
         <motion.div
-          className="relative z-10 bg-gray-800 rounded-full p-4 border border-quantaryx-purple/30"
+          className="relative z-10 bg-white dark:bg-gray-800 rounded-full p-4 border border-indigo-200 dark:border-quantaryx-purple/30"
           animate={{
-            boxShadow: ['0 0 10px rgba(155,135,245,0.3)', '0 0 20px rgba(155,135,245,0.5)', '0 0 10px rgba(155,135,245,0.3)']
+            boxShadow: ['0 0 8px rgba(99,102,241,0.3)', '0 0 16px rgba(99,102,241,0.4)', '0 0 8px rgba(99,102,241,0.3)']
           }}
           transition={{ 
             duration: 2, 
@@ -256,46 +240,43 @@ const DataIntegrationVisual = () => {
         >
           <motion.div
             animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, 0, -5, 0]
+              scale: [1, 1.05, 1],
+              rotate: [0, 3, 0, -3, 0]
             }}
             transition={{
-              duration: 3,
-              repeat: Infinity
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut"
             }}
           >
-            <Brain className="h-12 w-12 text-white" />
+            <Brain className="h-8 w-8 text-indigo-600 dark:text-quantaryx-purple" />
           </motion.div>
         </motion.div>
         
-        {/* Particle effects */}
-        {Array.from({ length: 12 }).map((_, index) => {
-          const angle = (index / 12) * Math.PI * 2;
-          const distance = 80 + Math.random() * 40;
+        {/* Simplified Particle effects - 减少数量和复杂度 */}
+        {Array.from({ length: 6 }).map((_, index) => {
+          const angle = (index / 6) * Math.PI * 2;
+          const distance = 70;
           const x = Math.cos(angle) * distance;
           const y = Math.sin(angle) * distance;
-          const size = 1 + Math.random() * 2;
           
           return (
             <motion.div 
               key={`particle-${index}`}
-              className="absolute bg-quantaryx-purple/70 rounded-full"
+              className="absolute bg-indigo-400 dark:bg-quantaryx-purple/70 rounded-full w-1 h-1"
               style={{ 
-                width: `${size}px`,
-                height: `${size}px`,
                 left: `calc(50% + ${x}px)`,
                 top: `calc(50% + ${y}px)`
               }}
               animate={{ 
-                x: [0, Math.random() * 20 - 10],
-                y: [0, Math.random() * 20 - 10],
-                opacity: [0, 0.8, 0]
+                opacity: [0, 0.6, 0],
+                scale: [0.5, 1, 0.5]
               }}
               transition={{ 
-                duration: 2 + Math.random() * 2, 
+                duration: 1.5, 
                 repeat: Infinity,
                 repeatType: "reverse",
-                delay: index * 0.2
+                delay: index * 0.3
               }}
             />
           );
@@ -312,51 +293,51 @@ const DataIntegrationVisual = () => {
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      <h3 className="text-white text-xl font-semibold mb-4">結構化資料</h3>
-      <p className="text-gray-300 text-sm mb-6 text-center max-w-md">
+      <h3 className="text-slate-800 dark:text-white text-xl font-semibold mb-4">結構化資料</h3>
+      <p className="text-slate-600 dark:text-gray-300 text-sm mb-6 text-center max-w-md">
         經過AI處理後的數據已被轉換為結構化格式，可用於分析和決策
       </p>
       
       <div className="space-y-6 w-full max-w-md">
         {/* Financial report card */}
         <motion.div 
-          className="bg-gray-800/80 rounded-lg border border-gray-700 overflow-hidden shadow-lg"
+          className="bg-white dark:bg-gray-800/80 rounded-lg border border-slate-200 dark:border-gray-700 overflow-hidden shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
         >
           {/* Card header */}
-          <div className="bg-gray-700/60 px-4 py-3 flex justify-between items-center border-b border-gray-600">
+          <div className="bg-slate-100 dark:bg-gray-700/60 px-4 py-3 flex justify-between items-center border-b border-slate-200 dark:border-gray-600">
             <div className="flex items-center">
-              <BarChart3 className="h-5 w-5 text-quantaryx-purple mr-2" />
-              <span className="text-white font-medium">財務報表</span>
+              <BarChart3 className="h-5 w-5 text-indigo-600 dark:text-quantaryx-purple mr-2" />
+              <span className="text-slate-800 dark:text-white font-medium">財務報表</span>
             </div>
-            <span className="text-xs text-gray-300">自動生成</span>
+            <span className="text-xs text-slate-600 dark:text-gray-300">自動生成</span>
           </div>
           
           {/* Table with scrolling */}
           <div className="overflow-y-auto max-h-[200px] custom-scrollbar">
             <table className="w-full text-sm">
-              <thead className="bg-gray-700/50 sticky top-0 z-10">
+              <thead className="bg-slate-100 dark:bg-gray-700/50 sticky top-0 z-10">
                 <tr>
-                  <th className="py-2 px-4 text-left text-gray-300 font-medium">帳戶</th>
-                  <th className="py-2 px-4 text-right text-gray-300 font-medium">價值</th>
-                  <th className="py-2 px-4 text-right text-gray-300 font-medium">變化</th>
+                  <th className="py-2 px-4 text-left text-slate-700 dark:text-gray-300 font-medium">帳戶</th>
+                  <th className="py-2 px-4 text-right text-slate-700 dark:text-gray-300 font-medium">價值</th>
+                  <th className="py-2 px-4 text-right text-slate-700 dark:text-gray-300 font-medium">變化</th>
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((row, index) => (
+                {tableData.slice(0, 4).map((row, index) => (
                   <motion.tr 
                     key={index}
-                    className="border-t border-gray-700 hover:bg-gray-700/30 transition-colors"
+                    className="border-t border-slate-200 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-700/30 transition-colors"
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.4 + (index * 0.1) }}
+                    transition={{ duration: 0.2, delay: 0.2 + (index * 0.05) }}
                   >
-                    <td className="py-2 px-4 text-white">{row.account}</td>
-                    <td className="py-2 px-4 text-right font-medium" style={{ color: row.account === "房地產投資" ? "#33C3F0" : "white" }}>{row.value}</td>
+                    <td className="py-2 px-4 text-slate-800 dark:text-white">{row.account}</td>
+                    <td className="py-2 px-4 text-right font-medium text-slate-800 dark:text-white" style={{ color: row.account === "房地產投資" ? "#33C3F0" : undefined }}>{row.value}</td>
                     <td className={`py-2 px-4 text-right font-medium ${row.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
                       {row.change}
                     </td>
@@ -369,23 +350,23 @@ const DataIntegrationVisual = () => {
         
         {/* Asset distribution chart */}
         <motion.div 
-          className="bg-gray-800/80 rounded-lg border border-gray-700 p-4 shadow-lg"
+          className="bg-white dark:bg-gray-800/80 rounded-lg border border-slate-200 dark:border-gray-700 p-4 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
         >
           <div className="flex items-center mb-3">
-            <ChartPie className="h-5 w-5 text-quantaryx-purple mr-2" />
-            <span className="text-white font-medium">資產分布</span>
+            <ChartPie className="h-5 w-5 text-indigo-600 dark:text-quantaryx-purple mr-2" />
+            <span className="text-slate-800 dark:text-white font-medium">資產分布</span>
           </div>
           
           <div className="flex items-center justify-between">
             {/* Pie chart */}
             <motion.div 
-              className="relative h-32 w-32"
+              className="relative h-24 w-24"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
+              transition={{ duration: 0.3, delay: 0.4 }}
             >
               <div className="relative w-full h-full">
                 {pieChartSegments.map((segment, index) => {
@@ -401,7 +382,7 @@ const DataIntegrationVisual = () => {
                       className="absolute inset-0"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3, delay: 0.8 + (index * 0.1) }}
+                      transition={{ duration: 0.2, delay: 0.5 + (index * 0.05) }}
                       style={{
                         background: `conic-gradient(${segment.color} ${startAngle}deg ${endAngle}deg, transparent ${endAngle}deg 360deg)`,
                         borderRadius: '50%'
@@ -410,27 +391,27 @@ const DataIntegrationVisual = () => {
                   );
                 })}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 bg-gray-800 rounded-full"></div>
+                  <div className="w-8 h-8 bg-white dark:bg-gray-800 rounded-full"></div>
                 </div>
               </div>
             </motion.div>
             
             {/* Legend */}
-            <div className="flex-1 pl-6">
-              <ul className="text-sm space-y-2">
-                {pieChartSegments.map((segment, index) => (
+            <div className="flex-1 pl-4">
+              <ul className="text-xs space-y-1">
+                {pieChartSegments.slice(0, 3).map((segment, index) => (
                   <motion.li 
                     key={index} 
                     className="flex items-center justify-between"
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.9 + (index * 0.1) }}
+                    transition={{ duration: 0.2, delay: 0.6 + (index * 0.05) }}
                   >
                     <div className="flex items-center">
-                      <span className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: segment.color }}></span>
-                      <span className="text-gray-300">{segment.label}</span>
+                      <span className="w-2 h-2 rounded-full mr-1" style={{ backgroundColor: segment.color }}></span>
+                      <span className="text-slate-600 dark:text-gray-300">{segment.label}</span>
                     </div>
-                    <span className="font-medium" style={{ color: segment.color }}>{segment.percent}%</span>
+                    <span className="font-medium text-xs" style={{ color: segment.color }}>{segment.percent}%</span>
                   </motion.li>
                 ))}
               </ul>
@@ -442,33 +423,33 @@ const DataIntegrationVisual = () => {
   );
 
   return (
-    <div className="w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg overflow-hidden relative">
-      {/* Grid background for tech feel */}
-      <div className="absolute inset-0 bg-grid opacity-10"></div>
+    <div className="w-full h-full bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 rounded-lg overflow-hidden relative border border-slate-200 dark:border-0">
+      {/* Grid background for tech feel - only in dark mode */}
+      <div className="absolute inset-0 bg-grid opacity-0 dark:opacity-5"></div>
       
       <div className="relative w-full h-full p-3 flex flex-col">
-        <h2 className="text-white text-center mb-2 font-semibold text-xl">智能資料整合流程</h2>
+        <h2 className="text-slate-800 dark:text-white text-center mb-2 font-semibold text-xl">智能資料整合流程</h2>
         
         {/* Flow process indicators */}
-        <div className="flex justify-center mb-3 text-xs text-gray-400">
+        <div className="flex justify-center mb-3 text-xs text-slate-600 dark:text-gray-400">
           <div className="flex items-center">
-            <span className={`px-2 py-1 rounded-md transition-all duration-300 ${currentStep === 1 ? 'bg-quantaryx-purple/20 text-white font-medium' : 'bg-gray-800/60'}`}>未結構化資料</span>
+            <span className={`px-2 py-1 rounded-md transition-all duration-200 ${currentStep === 1 ? 'bg-indigo-100 dark:bg-quantaryx-purple/20 text-slate-800 dark:text-white font-medium' : 'bg-slate-100 dark:bg-gray-800/60'}`}>未結構化資料</span>
             <motion.div 
-              animate={{ x: [0, 3, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
+              animate={{ x: [0, 2, 0] }}
+              transition={{ repeat: Infinity, duration: 1.2 }}
               className="mx-1"
             >
-              <MoveRight className={`h-4 w-4 ${currentStep === 1 ? 'text-quantaryx-purple' : 'text-quantaryx-purple/50'}`} />
+              <MoveRight className={`h-4 w-4 ${currentStep === 1 ? 'text-indigo-600 dark:text-quantaryx-purple' : 'text-indigo-400 dark:text-quantaryx-purple/50'}`} />
             </motion.div>
-            <span className={`px-2 py-1 rounded-md transition-all duration-300 ${currentStep === 2 ? 'bg-quantaryx-purple/20 text-white font-medium' : 'bg-gray-800/60'}`}>智能處理</span>
+            <span className={`px-2 py-1 rounded-md transition-all duration-200 ${currentStep === 2 ? 'bg-indigo-100 dark:bg-quantaryx-purple/20 text-slate-800 dark:text-white font-medium' : 'bg-slate-100 dark:bg-gray-800/60'}`}>智能處理</span>
             <motion.div 
-              animate={{ x: [0, 3, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
+              animate={{ x: [0, 2, 0] }}
+              transition={{ repeat: Infinity, duration: 1.2 }}
               className="mx-1"
             >
-              <MoveRight className={`h-4 w-4 ${currentStep === 2 ? 'text-quantaryx-purple' : 'text-quantaryx-purple/50'}`} />
+              <MoveRight className={`h-4 w-4 ${currentStep === 2 ? 'text-indigo-600 dark:text-quantaryx-purple' : 'text-indigo-400 dark:text-quantaryx-purple/50'}`} />
             </motion.div>
-            <span className={`px-2 py-1 rounded-md transition-all duration-300 ${currentStep === 3 ? 'bg-quantaryx-purple/20 text-white font-medium' : 'bg-gray-800/60'}`}>結構化資料</span>
+            <span className={`px-2 py-1 rounded-md transition-all duration-200 ${currentStep === 3 ? 'bg-indigo-100 dark:bg-quantaryx-purple/20 text-slate-800 dark:text-white font-medium' : 'bg-slate-100 dark:bg-gray-800/60'}`}>結構化資料</span>
           </div>
         </div>
         

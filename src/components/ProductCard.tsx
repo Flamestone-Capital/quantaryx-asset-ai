@@ -131,7 +131,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, featur
         style={{ animationDelay: `${delay}ms` }}
       >
         <div 
-          className="h-full gradient-card rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-700 bg-gray-800/90 hover:bg-gray-800 cursor-pointer"
+          className="h-full gradient-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-800/90 hover:bg-white hover:shadow-2xl hover:border-gray-300 dark:hover:bg-gray-800 dark:hover:border-gray-600 cursor-pointer backdrop-blur-sm hover:scale-[1.02]"
           onClick={handleClick}
         >
           <div className="p-6">
@@ -140,12 +140,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, featur
             </div>
             
             <h3 className="text-xl font-bold mb-1 flex items-center">
-              <span className="text-white font-medium">
+              <span className="text-gray-900 dark:text-white font-medium">
                 {title}
               </span>
             </h3>
             
-            <p className="text-gray-300 italic mb-4 text-sm">{subtitle}</p>
+            <p className="text-gray-600 dark:text-gray-300 italic mb-4 text-sm">{subtitle}</p>
             
             <ul className="space-y-2 text-left">
               {features.map((feature, i) => (
@@ -155,7 +155,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, icon, featur
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </span>
-                  <span className="text-sm text-gray-200">{feature}</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-200">{feature}</span>
                 </li>
               ))}
             </ul>

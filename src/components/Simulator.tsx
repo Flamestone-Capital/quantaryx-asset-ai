@@ -181,28 +181,28 @@ const Simulator = () => {
   };
 
   return (
-    <div className="w-full h-full rounded-xl overflow-hidden bg-slate-900 relative">
+    <div className="w-full h-full rounded-xl overflow-hidden bg-white dark:bg-slate-900 relative">
       {/* 背景图层 */}
-      <div className="absolute inset-0 bg-[url('/images/investment-bg.svg')] bg-cover bg-center opacity-20"></div>
+      <div className="absolute inset-0 bg-[url('/images/investment-bg.svg')] bg-cover bg-center opacity-5 dark:opacity-20"></div>
       
       <div className="relative z-10 p-4 md:p-6 h-[450px] overflow-auto scrollbar-thin scrollbar-thumb-indigo-500/30 scrollbar-track-transparent">
         <div className="text-center mb-4">
-          <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-300 to-indigo-400 mb-2">
+          <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 dark:from-indigo-400 dark:via-cyan-300 dark:to-indigo-400 mb-2">
             AI投資策略轉轉樂
           </h2>
-          <p className="text-slate-400 text-sm">選擇市場情境，投入模擬幣獲取AI投資建議</p>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">選擇市場情境，投入模擬幣獲取AI投資建議</p>
         </div>
         
         <div className="max-w-md mx-auto">
           {/* 情境选择 */}
           <div className="mb-4">
-            <label className="block text-slate-300 text-sm font-medium mb-2">選擇市場情境</label>
+            <label className="block text-slate-600 dark:text-slate-300 text-sm font-medium mb-2">選擇市場情境</label>
             <div className="relative">
               <select
                 value={selectedScenario}
                 onChange={handleScenarioChange}
                 disabled={isSpinning}
-                className="w-full bg-slate-800/80 backdrop-blur-sm border border-indigo-500/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-[0_0_15px_rgba(79,70,229,0.15)] appearance-none"
+                className="w-full bg-white dark:bg-slate-800/80 backdrop-blur-sm border border-slate-300 dark:border-indigo-500/30 rounded-lg p-3 text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-cyan-500 shadow-sm dark:shadow-[0_0_15px_rgba(79,70,229,0.15)] appearance-none"
               >
                 {marketScenarios.map((scenario) => (
                   <option key={scenario.value} value={scenario.value}>
@@ -211,7 +211,7 @@ const Simulator = () => {
                 ))}
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg className="h-5 w-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5 text-slate-400 dark:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
@@ -221,17 +221,17 @@ const Simulator = () => {
           {/* 老虎机 - 更具未来感的设计 */}
           <div className="mt-5 mb-5">
             <motion.div 
-              className="bg-gradient-to-b from-slate-800 to-slate-900 rounded-xl p-6 shadow-[0_0_30px_rgba(79,70,229,0.3)] relative overflow-hidden border border-indigo-500/30"
-              initial={{ boxShadow: "0 0 30px rgba(79,70,229,0.3)" }}
+              className="bg-white dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 shadow-lg dark:shadow-[0_0_30px_rgba(79,70,229,0.3)] relative overflow-hidden border border-slate-200 dark:border-indigo-500/30"
+              initial={{ boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
               animate={{ 
                 boxShadow: isSpinning 
-                  ? "0 0 50px rgba(79,70,229,0.5)" 
-                  : "0 0 30px rgba(79,70,229,0.3)" 
+                  ? "0 10px 15px -3px rgb(0 0 0 / 0.1)" 
+                  : "0 4px 6px -1px rgb(0 0 0 / 0.1)" 
               }}
               transition={{ duration: 0.5, repeat: isSpinning ? Infinity : 0, repeatType: "reverse" }}
             >
-              {/* 霓虹边缘装饰 */}
-              <div className="absolute inset-0 rounded-xl pointer-events-none opacity-50" 
+              {/* 霓虹边缘装饰 - 只在暗色模式显示 */}
+              <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 dark:opacity-50" 
                 style={{
                   background: "linear-gradient(90deg, #4f46e5 0%, #06b6d4 25%, transparent 50%, #06b6d4 75%, #4f46e5 100%)",
                   backgroundSize: "200% 100%",
@@ -241,8 +241,8 @@ const Simulator = () => {
               
               <div className="relative">
                 {/* 老虎机顶部 - 更加金属质感 */}
-                <div className="flex justify-between items-center mb-3 pb-2 border-b border-indigo-500/30">
-                  <div className="text-white font-bold text-lg flex items-center">
+                <div className="flex justify-between items-center mb-3 pb-2 border-b border-slate-200 dark:border-indigo-500/30">
+                  <div className="text-slate-800 dark:text-white font-bold text-lg flex items-center">
                     <motion.div
                       animate={{ rotate: isSpinning ? 360 : 0 }}
                       transition={{ duration: 3, repeat: isSpinning ? Infinity : 0, ease: "linear" }}
@@ -250,41 +250,41 @@ const Simulator = () => {
                     >
                       <span className="text-xs">AI</span>
                     </motion.div>
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-400">智能投資機</span>
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400">智能投資機</span>
                   </div>
                   <div className="flex space-x-2">
-                    <div className="h-3 w-3 rounded-full bg-cyan-500 animate-pulse"></div>
-                    <div className="h-3 w-3 rounded-full bg-indigo-500 animate-pulse" style={{ animationDelay: "0.5s" }}></div>
+                    <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
+                    <div className="h-3 w-3 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: "0.5s" }}></div>
                     <div className="h-3 w-3 rounded-full bg-red-500 animate-pulse" style={{ animationDelay: "1s" }}></div>
                   </div>
                 </div>
                 
                 {/* 老虎机卷轴区域 - 3D效果增强 */}
                 <div className="relative rounded-lg overflow-hidden mb-6">
-                  {/* 光晕效果 */}
-                  <div className={`absolute inset-0 bg-gradient-to-b from-cyan-500/20 via-transparent to-indigo-500/20 opacity-${isSpinning ? '70' : '30'} transition-opacity duration-300 pointer-events-none z-10`}></div>
+                  {/* 光晕效果 - 只在暗色模式显示 */}
+                  <div className={`absolute inset-0 bg-gradient-to-b from-cyan-500/20 via-transparent to-indigo-500/20 opacity-0 dark:opacity-${isSpinning ? '70' : '30'} transition-opacity duration-300 pointer-events-none z-10`}></div>
                   
-                  {/* 3D边框效果 */}
-                  <div className="absolute inset-0 border-t-2 border-l-2 border-r-2 border-b-4 border-cyan-500/20 rounded-lg pointer-events-none"></div>
+                  {/* 3D边框效果 - 只在暗色模式显示 */}
+                  <div className="absolute inset-0 border-t-2 border-l-2 border-r-2 border-b-4 border-transparent dark:border-cyan-500/20 rounded-lg pointer-events-none"></div>
                   
-                  <div className="flex justify-around gap-3 bg-slate-900 p-5 rounded-lg shadow-inner border border-slate-700 relative">
-                    {/* 光线照射效果 */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-indigo-500/5 pointer-events-none"></div>
+                  <div className="flex justify-around gap-3 bg-slate-50 dark:bg-slate-900 p-5 rounded-lg shadow-inner border border-slate-200 dark:border-slate-700 relative">
+                    {/* 光线照射效果 - 只在暗色模式显示 */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-transparent dark:from-cyan-500/5 dark:via-transparent dark:to-indigo-500/5 pointer-events-none"></div>
                     
                     {reels.map((reel, reelIndex) => (
                       <div 
                         key={reelIndex} 
-                        className="w-24 h-28 bg-slate-800 rounded-lg overflow-hidden border border-indigo-500/30 relative shadow-[inset_0_0_15px_rgba(79,70,229,0.2)]"
+                        className="w-24 h-28 bg-white dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-200 dark:border-indigo-500/30 relative shadow-sm dark:shadow-[inset_0_0_15px_rgba(79,70,229,0.2)]"
                       >
-                        {/* 渐变叠加层 */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-indigo-500/10 mix-blend-overlay pointer-events-none"></div>
+                        {/* 渐变叠加层 - 只在暗色模式显示 */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-transparent dark:from-cyan-500/10 dark:to-indigo-500/10 mix-blend-overlay pointer-events-none"></div>
                         
-                        {/* 光晕反射 */}
-                        <div className="absolute -inset-1 bg-gradient-to-tr from-transparent via-cyan-500/10 to-transparent opacity-50 blur-xl pointer-events-none"></div>
+                        {/* 光晕反射 - 只在暗色模式显示 */}
+                        <div className="absolute -inset-1 bg-gradient-to-tr from-transparent via-transparent to-transparent dark:via-cyan-500/10 opacity-0 dark:opacity-50 blur-xl pointer-events-none"></div>
                         
                         {/* 卷轴遮罩 */}
-                        <div className="absolute left-0 right-0 top-0 h-10 bg-gradient-to-b from-slate-900 to-transparent z-10"></div>
-                        <div className="absolute left-0 right-0 bottom-0 h-10 bg-gradient-to-t from-slate-900 to-transparent z-10"></div>
+                        <div className="absolute left-0 right-0 top-0 h-10 bg-gradient-to-b from-slate-50 dark:from-slate-900 to-transparent z-10"></div>
+                        <div className="absolute left-0 right-0 bottom-0 h-10 bg-gradient-to-t from-slate-50 dark:from-slate-900 to-transparent z-10"></div>
                         
                         {/* 卷轴中心点 */}
                         <div className="absolute top-1/2 left-0 right-0 h-px bg-transparent z-0"></div>
@@ -295,7 +295,7 @@ const Simulator = () => {
                             <div className="mb-1">
                               {slotItems[reel.currentIndex].icon}
                             </div>
-                            <span className="text-[8px] text-white font-bold">{slotItems[reel.currentIndex].label}</span>
+                            <span className="text-[8px] text-slate-800 dark:text-white font-bold">{slotItems[reel.currentIndex].label}</span>
                           </div>
                         )}
                         
@@ -318,7 +318,7 @@ const Simulator = () => {
                                 <div className="mb-1">
                                   {item.icon}
                                 </div>
-                                <span className="text-[8px] text-white font-bold">{item.label}</span>
+                                <span className="text-[8px] text-slate-800 dark:text-white font-bold">{item.label}</span>
                               </div>
                             ))}
                           </motion.div>
@@ -357,7 +357,7 @@ const Simulator = () => {
                           ></motion.div>
                         )}
                       </div>
-                      <span className="mt-2 text-yellow-500 font-medium text-xs bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm">投入模擬幣</span>
+                      <span className="mt-2 text-yellow-600 dark:text-yellow-500 font-medium text-xs bg-white/80 dark:bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm border border-slate-200 dark:border-0">投入模擬幣</span>
                     </div>
                   </motion.button>
                   
@@ -402,7 +402,7 @@ const Simulator = () => {
                         </motion.div>
                       </motion.div>
                       
-                      <span className="mt-2 text-red-400 font-medium text-xs bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm">拉動操作桿</span>
+                      <span className="mt-2 text-red-500 dark:text-red-400 font-medium text-xs bg-white/80 dark:bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm border border-slate-200 dark:border-0">拉動操作桿</span>
                     </div>
                   </motion.button>
                 </div>

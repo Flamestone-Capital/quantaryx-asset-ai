@@ -59,13 +59,13 @@ const Products = () => {
   ];
 
   return (
-    <div id="products" className="py-20 bg-gray-50">
+    <div id="products" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl opacity-0 animate-fade-in">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl opacity-0 animate-fade-in">
             <span className="text-gradient">四大產品矩陣</span>
           </h2>
-          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4 opacity-0 animate-fade-in animate-delay-100">
+          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300 sm:mt-4 opacity-0 animate-fade-in animate-delay-100">
             QuantaryX 為高資產個人與專業投資者打造的完整解決方案
           </p>
         </div>

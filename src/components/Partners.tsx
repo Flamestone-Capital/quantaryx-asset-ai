@@ -47,9 +47,12 @@ const Partners = () => {
   ];
 
   return (
-    <div className="bg-black py-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-white mb-12">
+    <div className="bg-white dark:bg-black py-16 overflow-hidden relative">
+      {/* 背景纹理 - 只在明亮模式显示 */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.03)_1px,transparent_0)] [background-size:20px_20px] dark:hidden"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <h2 className="text-3xl font-bold text-center text-slate-800 dark:text-white mb-12">
           合作夥伴
         </h2>
         
@@ -61,7 +64,7 @@ const Partners = () => {
               {partners.slice(0, 4).map((partner, index) => (
                 <div 
                   key={`row1-${index}`} 
-                  className="w-36 h-36 bg-white flex items-center justify-center p-4 rounded-md shadow-lg flex-shrink-0"
+                  className="w-36 h-36 bg-white flex items-center justify-center p-4 rounded-lg dark:rounded-md shadow-lg border border-slate-200 dark:border-0 flex-shrink-0 hover:shadow-xl dark:hover:shadow-lg hover:scale-105 dark:hover:scale-100 transition-all duration-300"
                 >
                   <img 
                     src={partner.logo} 
@@ -77,7 +80,7 @@ const Partners = () => {
               {partners.slice(4, 8).map((partner, index) => (
                 <div 
                   key={`row2-${index}`} 
-                  className="w-36 h-36 bg-white flex items-center justify-center p-4 rounded-md shadow-lg flex-shrink-0"
+                  className="w-36 h-36 bg-white flex items-center justify-center p-4 rounded-lg dark:rounded-md shadow-lg border border-slate-200 dark:border-0 flex-shrink-0 hover:shadow-xl dark:hover:shadow-lg hover:scale-105 dark:hover:scale-100 transition-all duration-300"
                 >
                   <img 
                     src={partner.logo} 

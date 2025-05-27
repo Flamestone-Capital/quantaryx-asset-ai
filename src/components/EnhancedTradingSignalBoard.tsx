@@ -31,33 +31,49 @@ const generateCandlestickData = (count: number) => {
 
 // 添加交易信号
 const addTradingSignals = (data: any[]) => {
-  // 在数据中随机选择2-3个点添加交易信号
-  const signalCount = Math.floor(Math.random() * 2) + 2; // 2-3个信号
   const dataLength = data.length;
-  const signalIndices = [];
   
-  // 确保信号不会太靠近
-  while (signalIndices.length < signalCount) {
-    const index = Math.floor(Math.random() * (dataLength - 10)) + 5; // 避免最开始和最后的几个点
-    if (!signalIndices.includes(index) && 
-        !signalIndices.some(i => Math.abs(i - index) < 5)) { // 确保信号之间至少间隔5个点
-      signalIndices.push(index);
-    }
-  }
+  // 确保我们有买入和卖出信号各一个
+  const buyIndex = Math.floor(dataLength * 0.3) + Math.floor(Math.random() * 5); // 在30%左右位置
+  const sellIndex = Math.floor(dataLength * 0.7) + Math.floor(Math.random() * 5); // 在70%左右位置
   
-  // 排序索引
-  signalIndices.sort((a, b) => a - b);
+  // 策略列表
+  const strategies = [
+    'MovingAverage',
+    'RSI Oversold',
+    'MACD Signal',
+    'Bollinger Bands',
+    'Support Level',
+    'Volume Spike',
+    'Trend Breakout'
+  ];
   
-  // 添加信号
-  signalIndices.forEach((index, i) => {
-    // 交替添加买入和卖出信号，但确保最后一个是买入信号
-    const isBuy = i === signalIndices.length - 1 ? true : i % 2 === 0;
-    data[index].signal = {
-      type: isBuy ? 'buy' : 'sell',
-      price: data[index].close.toFixed(2),
-      strength: isBuy ? (Math.random() * 2 + 8).toFixed(1) : (Math.random() * 2 + 7).toFixed(1) // 8-10分或7-9分
-    };
-  });
+  const exitStrategies = [
+    'TakeProfit',
+    'StopLoss',
+    'ExitInDays',
+    'RSI Overbought',
+    'Resistance Level',
+    'Volume Drop'
+  ];
+  
+  // 添加买入信号
+  data[buyIndex].signal = {
+    type: 'buy',
+    price: data[buyIndex].close.toFixed(2),
+    strength: (Math.random() * 2 + 8).toFixed(1), // 8-10分
+    strategy: strategies[Math.floor(Math.random() * strategies.length)],
+    days: Math.floor(Math.random() * 5) + 1 // 1-5天
+  };
+  
+  // 添加卖出信号
+  data[sellIndex].signal = {
+    type: 'sell',
+    price: data[sellIndex].close.toFixed(2),
+    strength: (Math.random() * 2 + 7).toFixed(1), // 7-9分
+    strategy: exitStrategies[Math.floor(Math.random() * exitStrategies.length)],
+    days: Math.floor(Math.random() * 3) + 1 // 1-3天
+  };
   
   return data;
 };
@@ -104,6 +120,7 @@ const EnhancedTradingSignalBoard = () => {
   const [aiScore] = useState(8.9);
   const [showAiScore, setShowAiScore] = useState(false);
   const [chartReady, setChartReady] = useState(false);
+  const [currentSignalStep, setCurrentSignalStep] = useState(0); // 0: 买入, 1: 卖出
   
   // 图表尺寸和样式
   const chartWidth = 500;
@@ -125,6 +142,74 @@ const EnhancedTradingSignalBoard = () => {
   const priceToY = (price: number) => {
     const { min, max } = priceRange;
     return margin.top + ((max - price) / (max - min)) * (chartHeight - margin.top - margin.bottom);
+  };
+
+  // 启动信号序列
+  const startSignalSequence = (dataWithSignals: any[]) => {
+    // 找到买入和卖出信号
+    const buySignalIndex = dataWithSignals.findIndex(
+      (candle) => candle.signal && candle.signal.type === 'buy'
+    );
+    const sellSignalIndex = dataWithSignals.findIndex(
+      (candle) => candle.signal && candle.signal.type === 'sell'
+    );
+
+    const executeStep = (step: number) => {
+      if (step === 0 && buySignalIndex !== -1) {
+        // 执行买入
+        setCurrentSignalStep(0);
+        setActiveSignalIndex(buySignalIndex);
+        setOrderDetails({
+          type: 'buy',
+          price: dataWithSignals[buySignalIndex].close.toFixed(2),
+          quantity: '58.58',
+          total: '10000.0'
+        });
+        
+        setTimeout(() => {
+          setShowOrderConfirmation(true);
+          
+          // 3秒后隐藏确认框并移到卖出
+          setTimeout(() => {
+            setShowOrderConfirmation(false);
+            setActiveSignalIndex(null);
+            
+            // 1秒后执行卖出
+            setTimeout(() => {
+              executeStep(1);
+            }, 1000);
+          }, 3000);
+        }, 1000);
+      } else if (step === 1 && sellSignalIndex !== -1) {
+        // 执行卖出
+        setCurrentSignalStep(1);
+        setActiveSignalIndex(sellSignalIndex);
+        setOrderDetails({
+          type: 'sell',
+          price: dataWithSignals[sellSignalIndex].close.toFixed(2),
+          quantity: '58.58',
+          total: '298.5'
+        });
+        
+        setTimeout(() => {
+          setShowOrderConfirmation(true);
+          
+          // 3秒后隐藏确认框，然后重新开始循环
+          setTimeout(() => {
+            setShowOrderConfirmation(false);
+            setActiveSignalIndex(null);
+            
+            // 2秒后重新开始整个序列
+            setTimeout(() => {
+              executeStep(0);
+            }, 2000);
+          }, 3000);
+        }, 1000);
+      }
+    };
+
+    // 开始执行序列
+    executeStep(0);
   };
   
   useEffect(() => {
@@ -150,21 +235,9 @@ const EnhancedTradingSignalBoard = () => {
       setTimeout(() => {
         setShowAiScore(true);
         
-        // 然后激活买入信号
+        // 然后开始信号序列
         setTimeout(() => {
-          // 找到最后一个买入信号的索引
-          const buySignalIndex = dataWithSignals.findIndex(
-            (candle, index) => candle.signal && candle.signal.type === 'buy'
-          );
-          
-          if (buySignalIndex !== -1) {
-            setActiveSignalIndex(buySignalIndex);
-            
-            // 最后显示订单确认
-            setTimeout(() => {
-              setShowOrderConfirmation(true);
-            }, 1000);
-          }
+          startSignalSequence(dataWithSignals);
         }, 1000);
       }, 500);
     };
@@ -178,32 +251,33 @@ const EnhancedTradingSignalBoard = () => {
       setShowAiScore(false);
       setActiveSignalIndex(null);
       setShowOrderConfirmation(false);
+      setCurrentSignalStep(0);
     };
   }, []);
   
   return (
-    <div className="relative w-full h-full flex flex-col bg-gray-900 rounded-lg p-4">
+    <div className="relative w-full h-full flex flex-col bg-white dark:bg-gray-900 rounded-lg p-4">
       {/* AI评分 */}
       <div className="flex justify-center mb-6">
         <motion.div 
-          className="bg-gray-800/90 backdrop-blur-md rounded-xl px-6 py-2.5 flex items-center space-x-3 border border-gray-700/70 shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
+          className="bg-gray-100/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl px-6 py-2.5 flex items-center space-x-3 border border-gray-300/70 dark:border-gray-700/70 shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
           initial={{ opacity: 0, y: -20, scale: 0.95 }}
           animate={{ opacity: showAiScore ? 1 : 0, y: showAiScore ? 0 : -20, scale: showAiScore ? 1 : 0.95 }}
           transition={{ type: "spring", stiffness: 400, damping: 25, duration: 0.5 }}
           whileHover={{ scale: 1.02 }}
         >
-          <BarChart3 size={18} className="text-blue-400 mr-1" />
-          <span className="text-white text-sm font-medium">AI 评分: </span>
+          <BarChart3 size={18} className="text-blue-600 dark:text-blue-400 mr-1" />
+          <span className="text-gray-800 dark:text-white text-sm font-medium">AI 评分: </span>
           <motion.span 
-            className="text-white text-lg font-bold"
+            className="text-gray-800 dark:text-white text-lg font-bold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
             <CountUp from={0} to={aiScore} duration={1.5} decimals={1} delay={0.5} />
           </motion.span>
-          <span className="text-gray-400 text-sm">/10</span>
-          <div className="w-28 h-3 bg-gray-700/70 rounded-full overflow-hidden ml-2 shadow-inner">
+          <span className="text-gray-500 dark:text-gray-400 text-sm">/10</span>
+          <div className="w-28 h-3 bg-gray-300/70 dark:bg-gray-700/70 rounded-full overflow-hidden ml-2 shadow-inner">
             <motion.div 
               className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-400 rounded-full"
               initial={{ width: 0 }}
@@ -217,7 +291,7 @@ const EnhancedTradingSignalBoard = () => {
       
       {/* 图表区域 */}
       <motion.div 
-        className="relative flex-1 bg-gray-900 rounded-lg overflow-hidden"
+        className="relative flex-1 bg-white dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-200 dark:border-transparent"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -252,9 +326,10 @@ const EnhancedTradingSignalBoard = () => {
                 y1={y} 
                 x2={chartWidth - margin.right} 
                 y2={y} 
-                stroke="#333" 
+                stroke="currentColor" 
                 strokeWidth="1" 
-                strokeDasharray="3,3" 
+                strokeDasharray="3,3"
+                className="text-gray-300 dark:text-gray-600"
               />
             );
           })}
@@ -517,6 +592,93 @@ const EnhancedTradingSignalBoard = () => {
                     >
                       {candle.signal.type === 'buy' ? '买入' : '卖出'}
                     </motion.text>
+                    
+                    {/* 策略线和标签 */}
+                    <motion.g
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.8, duration: 0.5 }}
+                    >
+                      {/* 策略连接线 */}
+                      <motion.line
+                        x1={x + candleWidth / 2}
+                        y1={candle.signal.type === 'buy' ? priceToY(candle.low) + 15 : priceToY(candle.high) - 15}
+                        x2={candle.signal.type === 'buy' ? x + candleWidth / 2 - 60 : x + candleWidth / 2}
+                        y2={candle.signal.type === 'buy' ? priceToY(candle.low) - 20 : priceToY(candle.high) - 50}
+                        stroke={candle.signal.type === 'buy' ? '#22c55e' : '#ef4444'}
+                        strokeWidth="1"
+                        strokeDasharray="3,3"
+                        animate={{
+                          strokeDashoffset: [0, -6]
+                        }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 1,
+                          ease: "linear"
+                        }}
+                      />
+                      
+                      {/* 策略标签背景 */}
+                      <motion.rect
+                        x={candle.signal.type === 'buy' ? 
+                          x + candleWidth / 2 - 120 : 
+                          x + candleWidth / 2 - (candle.signal.strategy.length * 6 + 10) / 2}
+                        y={candle.signal.type === 'buy' ? priceToY(candle.low) - 45 : priceToY(candle.high) - 75}
+                        width={candle.signal.strategy.length * 6 + 10}
+                        height="32"
+                        rx="4"
+                        className="fill-gray-800/90 dark:fill-gray-900/85"
+                        stroke={candle.signal.type === 'buy' ? '#22c55e' : '#ef4444'}
+                        strokeWidth="1"
+                        animate={{
+                          boxShadow: [
+                            `0 0 5px ${candle.signal.type === 'buy' ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`,
+                            `0 0 15px ${candle.signal.type === 'buy' ? 'rgba(34, 197, 94, 0.5)' : 'rgba(239, 68, 68, 0.5)'}`,
+                            `0 0 5px ${candle.signal.type === 'buy' ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`
+                          ]
+                        }}
+                        transition={{
+                          boxShadow: {
+                            repeat: Infinity,
+                            duration: 2,
+                            ease: "easeInOut"
+                          }
+                        }}
+                      />
+                      
+                      {/* 策略名称 */}
+                      <motion.text
+                        x={candle.signal.type === 'buy' ? 
+                          x + candleWidth / 2 - 120 + (candle.signal.strategy.length * 6 + 10) / 2 :
+                          x + candleWidth / 2}
+                        y={candle.signal.type === 'buy' ? priceToY(candle.low) - 32 : priceToY(candle.high) - 62}
+                        textAnchor="middle"
+                        fill={candle.signal.type === 'buy' ? '#22c55e' : '#ef4444'}
+                        fontSize="9"
+                        fontWeight="bold"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1 }}
+                      >
+                        {candle.signal.strategy}
+                      </motion.text>
+                      
+                      {/* 天数标签 */}
+                      <motion.text
+                        x={candle.signal.type === 'buy' ? 
+                          x + candleWidth / 2 - 120 + (candle.signal.strategy.length * 6 + 10) / 2 :
+                          x + candleWidth / 2}
+                        y={candle.signal.type === 'buy' ? priceToY(candle.low) - 23 : priceToY(candle.high) - 53}
+                        textAnchor="middle"
+                        className="fill-gray-500 dark:fill-gray-400"
+                        fontSize="7"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.2 }}
+                      >
+                        {candle.signal.days}
+                      </motion.text>
+                    </motion.g>
                   </motion.g>
                 )}
               </g>
@@ -537,75 +699,91 @@ const EnhancedTradingSignalBoard = () => {
                 damping: 25,
                 delay: 0.3
               }}
-              className="fixed z-50 bg-gray-900/98 backdrop-blur-md p-3 rounded-md border border-green-500/30 shadow-lg"
+              className={`fixed z-50 bg-white/98 dark:bg-gray-900/98 backdrop-blur-md p-2 rounded-md shadow-lg border ${
+                orderDetails.type === 'buy' ? 'border-green-500/30' : 'border-red-500/30'
+              }`}
               style={{ 
-                bottom: '10px',
-                left: '50%',
-                transform: 'translateX(-50%)',
+                bottom: '15px',
+                right: '15px',
                 width: 'auto',
-                maxWidth: '300px',
-                fontSize: '75%'
+                maxWidth: '220px',
+                fontSize: '70%'
               }}
             >
               <div>
                 {/* 标题和状态行 */}
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center">
-                    <Check size={12} className="mr-1 text-green-500" />
-                    <span className="font-bold text-white text-xs">交易已执行</span>
+                    <Check size={10} className={`mr-1 ${orderDetails.type === 'buy' ? 'text-green-500' : 'text-red-500'}`} />
+                    <span className="font-bold text-gray-800 dark:text-white text-[10px]">交易已执行</span>
                   </div>
-                  <div className="px-1.5 py-0.5 bg-green-500/20 text-green-400 rounded-full text-[10px] font-medium">
-                    买入
+                  <div className={`px-1 py-0.5 rounded-full text-[8px] font-medium ${
+                    orderDetails.type === 'buy' 
+                      ? 'bg-green-500/20 text-green-400' 
+                      : 'bg-red-500/20 text-red-400'
+                  }`}>
+                    {orderDetails.type === 'buy' ? '买入' : '卖出'}
                   </div>
                 </div>
                 
                 {/* 交易信息行 */}
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-2">
+                <div className="grid grid-cols-2 gap-x-2 gap-y-1 mb-1.5">
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
-                      <DollarSign size={10} className="mr-1 text-blue-400" />
-                      <span className="text-gray-300 text-[10px]">价格:</span>
+                      <DollarSign size={8} className="mr-0.5 text-blue-600 dark:text-blue-400" />
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">价格:</span>
                     </div>
-                    <span className="text-white font-bold text-[10px]">
+                    <span className="text-gray-800 dark:text-white font-bold text-[9px]">
                       $<CountUp from={0} to={parseFloat(orderDetails.price)} delay={0.7} />
                     </span>
                   </div>
                   
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
-                      <BarChart3 size={10} className="mr-1 text-purple-400" />
-                      <span className="text-gray-300 text-[10px]">数量:</span>
+                      <BarChart3 size={8} className="mr-0.5 text-purple-600 dark:text-purple-400" />
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">数量:</span>
                     </div>
-                    <span className="text-white font-bold text-[10px]">
+                    <span className="text-gray-800 dark:text-white font-bold text-[9px]">
                       <CountUp from={0} to={parseFloat(orderDetails.quantity)} delay={0.8} /> 股
                     </span>
                   </div>
                   
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
-                      <DollarSign size={10} className="mr-1 text-green-400" />
-                      <span className="text-gray-300 text-[10px]">总金额:</span>
+                      <DollarSign size={8} className={`mr-0.5 ${orderDetails.type === 'buy' ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400'}`} />
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">{orderDetails.type === 'buy' ? '总金额:' : '收益:'}</span>
                     </div>
-                    <span className="text-white font-bold text-[10px]">
-                      $<CountUp from={0} to={parseFloat(orderDetails.total)} decimals={1} delay={0.9} />
+                    <span className={`font-bold text-[9px] ${orderDetails.type === 'buy' ? 'text-gray-800 dark:text-white' : 'text-green-600 dark:text-green-400'}`}>
+                      {orderDetails.type === 'buy' ? '$' : '+$'}<CountUp from={0} to={parseFloat(orderDetails.total)} decimals={1} delay={0.9} />
                     </span>
                   </div>
                   
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
-                      <Clock size={10} className="mr-1 text-blue-400" />
-                      <span className="text-gray-300 text-[10px]">时间:</span>
+                      <Clock size={8} className="mr-0.5 text-blue-600 dark:text-blue-400" />
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">时间:</span>
                     </div>
-                    <span className="text-white text-[10px]">
+                    <span className="text-gray-800 dark:text-white text-[9px]">
                       {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})}
                     </span>
                   </div>
                 </div>
                 
+                {/* 策略信息 */}
+                <div className="flex items-center justify-between mt-1 mb-1">
+                  <div className="flex items-center">
+                    <TrendingUp size={8} className="mr-0.5 text-purple-600 dark:text-purple-400" />
+                    <span className="text-gray-600 dark:text-gray-300 text-[9px]">策略:</span>
+                  </div>
+                  <span className="text-gray-800 dark:text-white font-bold text-[9px]">
+                    {candlestickData[activeSignalIndex]?.signal?.strategy || 'AI Strategy'}
+                  </span>
+                </div>
+                
                 {/* 底部提示 */}
-                <div className="flex items-center mt-1 text-[9px] text-gray-300">
-                  <AlertCircle size={8} className="mr-1 text-blue-400 flex-shrink-0" />
-                  <span>AI 已根据市场信号自动执行最优交易策略</span>
+                <div className="flex items-center mt-1 text-[8px] text-gray-500 dark:text-gray-400">
+                  <AlertCircle size={7} className="mr-0.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                  <span>AI 已根据{candlestickData[activeSignalIndex]?.signal?.strategy || '市场信号'}自动执行交易</span>
                 </div>
               </div>
             </motion.div>

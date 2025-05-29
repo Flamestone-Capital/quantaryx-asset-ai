@@ -32,7 +32,7 @@ const investmentRecommendations = {
 const slotItems = [
   { 
     name: "黃金", 
-    icon: <div className="bg-indigo-900/60 rounded-md w-8 h-8 flex items-center justify-center border border-indigo-400/30">
+    icon: <div className="bg-yellow-100 dark:bg-indigo-900/60 rounded-md w-8 h-8 flex items-center justify-center border border-yellow-300 dark:border-indigo-400/30">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="12,4 16,12 12,20 8,12" fill="none" stroke="#EAB308" strokeWidth="2" />
         <circle cx="12" cy="12" r="2" fill="#EAB308" />
@@ -49,7 +49,7 @@ const slotItems = [
   },
   { 
     name: "債券", 
-    icon: <div className="bg-indigo-900/60 rounded-md w-8 h-8 flex items-center justify-center border border-indigo-400/30">
+    icon: <div className="bg-purple-100 dark:bg-indigo-900/60 rounded-md w-8 h-8 flex items-center justify-center border border-purple-300 dark:border-indigo-400/30">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="5" y="5" width="14" height="14" rx="2" fill="none" stroke="#8b5cf6" strokeWidth="2" />
         <path d="M5 9h14" stroke="#8b5cf6" strokeWidth="2" />
@@ -424,7 +424,7 @@ const Simulator = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="mb-4 p-4 bg-gradient-to-r from-indigo-600/30 to-cyan-500/30 rounded-lg border border-indigo-500/30 shadow-[0_0_15px_rgba(79,70,229,0.2)]"
+                    className="mb-4 p-4 bg-gradient-to-r from-slate-100/80 via-indigo-50/80 to-cyan-50/80 dark:from-indigo-600/30 dark:to-cyan-500/30 rounded-lg border border-slate-200/50 dark:border-indigo-500/30 shadow-sm dark:shadow-[0_0_15px_rgba(79,70,229,0.2)]"
                   >
                     <div className="flex items-center">
                       <motion.div 
@@ -435,8 +435,8 @@ const Simulator = () => {
                         🎰
                       </motion.div>
                       <div>
-                        <h3 className="text-white font-bold">分析完成！</h3>
-                        <p className="text-slate-300 text-sm">
+                        <h3 className="text-slate-800 dark:text-white font-bold">分析完成！</h3>
+                        <p className="text-slate-600 dark:text-slate-300 text-sm">
                           AI已為您生成{marketScenarios.find(s => s.value === selectedScenario)?.label}市場下的最佳投資配置
                         </p>
                       </div>
@@ -446,7 +446,7 @@ const Simulator = () => {
                   <motion.h3
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400 mb-4"
+                    className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-cyan-400 dark:to-indigo-400 mb-4"
                   >
                     AI推薦投資組合:
                   </motion.h3>
@@ -465,19 +465,19 @@ const Simulator = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.5 }}
-                    className="mt-6 p-4 bg-gradient-to-r from-indigo-900/30 to-cyan-900/30 rounded-lg border border-indigo-500/30 shadow-lg"
+                    className="mt-6 p-4 bg-gradient-to-r from-slate-50/90 via-indigo-50/70 to-cyan-50/70 dark:from-indigo-900/30 dark:to-cyan-900/30 rounded-lg border border-slate-200/50 dark:border-indigo-500/30 shadow-sm dark:shadow-lg"
                   >
                     <div className="flex items-start">
                       <motion.div 
-                        className="text-cyan-400 mr-3 mt-1"
+                        className="text-indigo-500 dark:text-cyan-400 mr-3 mt-1"
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
                         💡
                       </motion.div>
                       <div>
-                        <h4 className="font-medium text-cyan-400 mb-1">AI智能洞察</h4>
-                        <p className="text-sm text-slate-300">
+                        <h4 className="font-medium text-indigo-600 dark:text-cyan-400 mb-1">AI智能洞察</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">
                           根據您選擇的{marketScenarios.find(s => s.value === selectedScenario)?.label}市場情境，AI推薦上述資產配置以平衡收益與風險。此策略考慮了當前市場波動性與長期增長潛力。
                         </p>
                       </div>

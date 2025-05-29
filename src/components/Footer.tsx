@@ -1,8 +1,9 @@
-
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
   
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -21,7 +22,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">QuantaryX</h3>
             <p className="text-gray-300">
-              AI驅動的個人與機構資產作業系統，重新定義資產理解與財富掌控方式。
+            為高資產個人與專業投資者提供全方位的資產可視化、智能決策與自動化執行平台。
             </p>
           </div>
           
@@ -49,7 +50,7 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4">聯繫我們</h3>
             <ul className="space-y-2">
               <li className="text-gray-300">info@quantaryx.com</li>
-              <li className="text-gray-300">+886 2 1234 5678</li>
+              <li className="text-gray-300">+852 3757 9783</li>
               <li className="flex space-x-4 mt-4">
                 <button className="text-gray-300 hover:text-white transition-colors">
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -74,9 +75,24 @@ const Footer = () => {
         <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-300">© {currentYear} QuantaryX. 版權所有。</div>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <button className="text-gray-300 hover:text-white transition-colors text-sm">隱私政策</button>
-            <button className="text-gray-300 hover:text-white transition-colors text-sm">服務條款</button>
-            <button className="text-gray-300 hover:text-white transition-colors text-sm">安全性</button>
+            <button 
+              onClick={() => navigate('/privacy')}
+              className="text-gray-300 hover:text-white transition-colors text-sm"
+            >
+              隱私政策
+            </button>
+            <button 
+              onClick={() => navigate('/terms')}
+              className="text-gray-300 hover:text-white transition-colors text-sm"
+            >
+              服務條款
+            </button>
+            <button 
+              onClick={() => navigate('/security')}
+              className="text-gray-300 hover:text-white transition-colors text-sm"
+            >
+              安全性
+            </button>
           </div>
         </div>
       </div>

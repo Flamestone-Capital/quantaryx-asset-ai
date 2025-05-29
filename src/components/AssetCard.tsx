@@ -19,18 +19,18 @@ const AssetCard: React.FC<AssetCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="bg-slate-800 rounded-lg p-4 border-2 border-indigo-500/50 hover:border-indigo-400 transition-all duration-300 shadow-lg shadow-indigo-900/20"
+      className="bg-white dark:bg-slate-800 rounded-lg p-4 border-2 border-slate-200 dark:border-indigo-500/50 hover:border-indigo-400 dark:hover:border-indigo-400 transition-all duration-300 shadow-lg shadow-slate-200/50 dark:shadow-indigo-900/20"
     >
       <div className="flex justify-between items-center mb-3">
         <div className="flex items-center">
           <span className="text-3xl mr-3">{icon}</span>
-          <h3 className="text-white font-medium text-lg">{assetName}</h3>
+          <h3 className="text-slate-800 dark:text-white font-medium text-lg">{assetName}</h3>
         </div>
-        <div className="bg-indigo-700 text-white text-sm font-bold px-2 py-1 rounded-full">
+        <div className="bg-indigo-100 text-indigo-700 dark:bg-indigo-700 dark:text-white text-sm font-bold px-2 py-1 rounded-full">
           {percentage}%
         </div>
       </div>
-      <div className="w-full bg-slate-700 h-3 rounded-full overflow-hidden">
+      <div className="w-full bg-slate-200 dark:bg-slate-700 h-3 rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
@@ -41,7 +41,7 @@ const AssetCard: React.FC<AssetCardProps> = ({
       <div className="flex justify-between mt-3">
         <div className="flex items-center">
           <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse mr-2"></span>
-          <span className="text-slate-400 text-sm">AI建議配置</span>
+          <span className="text-slate-500 dark:text-slate-400 text-sm">AI建議配置</span>
         </div>
         <motion.div
           initial={{ scale: 1 }}

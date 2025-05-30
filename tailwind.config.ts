@@ -115,6 +115,10 @@ export default {
 				'marquee-reverse': {
 					'0%': { transform: 'translateX(100%)' },
 					'100%': { transform: 'translateX(0%)' }
+				},
+				'infinite-scroll': {
+					'0%': { transform: 'translateX(0%)' },
+					'100%': { transform: 'translateX(-20%)' }
 				}
 			},
 			animation: {
@@ -122,8 +126,9 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out forwards',
 				'float': 'float 6s ease-in-out infinite',
-				'marquee': 'marquee 25s linear infinite',
-				'marquee-reverse': 'marquee-reverse 25s linear infinite'
+				'marquee': 'marquee 20s linear infinite',
+				'marquee-reverse': 'marquee-reverse 25s linear infinite',
+				'infinite-scroll': 'infinite-scroll 20s linear infinite'
 			}
 		}
 	},

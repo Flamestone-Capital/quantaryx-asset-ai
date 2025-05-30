@@ -1,4 +1,22 @@
-<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-  <rect width="200" height="200" fill="white"/>
-  <text x="50%" y="50%" font-family="Arial" font-size="16" text-anchor="middle" dominant-baseline="middle" fill="black">丰鑫投资</text>
+<svg width="240" height="120" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="120" fill="white"/>
+  
+  <!-- 立体几何房屋图标 -->
+  <!-- 左侧房屋 -->
+  <polygon points="25,50 35,30 45,50 45,70 25,70" fill="#3B82F6"/>
+  <polygon points="35,30 45,20 55,40 45,50" fill="#1E40AF"/>
+  
+  <!-- 中间房屋 -->
+  <polygon points="40,55 50,35 60,55 60,75 40,75" fill="#2563EB"/>
+  <polygon points="50,35 60,25 70,45 60,55" fill="#1D4ED8"/>
+  
+  <!-- 右侧房屋 -->
+  <polygon points="55,50 65,30 75,50 75,70 55,70" fill="#3B82F6"/>
+  <polygon points="65,30 75,20 85,40 75,50" fill="#1E40AF"/>
+  
+  <!-- 中文标题 -->
+  <text x="140" y="45" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" dominant-baseline="middle" fill="#1E40AF">丰鑫投资</text>
+  
+  <!-- 英文副标题 -->
+  <text x="140" y="70" font-family="Arial, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" dominant-baseline="middle" fill="#4A5568">FENGXIN INVESTMENT</text>
 </svg> 

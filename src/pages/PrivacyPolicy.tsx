@@ -170,22 +170,13 @@ const PrivacyPolicy = () => {
           <p className="text-gray-700 dark:text-gray-300 mb-4">
             如果您對此隱私政策有任何疑問或想要行使您的權利，請通過以下方式聯繫我們：
           </p>
-          <div className="grid md:grid-cols-2 gap-4 text-sm">
+          <div className="text-sm">
             <div>
               <strong className="text-gray-900 dark:text-white">電子郵件：</strong>
               <br />
               <a href="mailto:privacy@quantaryx.com" className="text-indigo-600 dark:text-indigo-400 hover:underline">
                 privacy@quantaryx.com
               </a>
-            </div>
-            <div>
-              <strong className="text-gray-900 dark:text-white">郵寄地址：</strong>
-              <br />
-              <span className="text-gray-700 dark:text-gray-300">
-                QuantaryX 隱私保護部<br />
-                香港中環金融街1號<br />
-                郵編：000000
-              </span>
             </div>
           </div>
         </motion.div>

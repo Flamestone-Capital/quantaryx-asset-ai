@@ -1,4 +1,13 @@
-<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-  <rect width="200" height="200" fill="white"/>
-  <text x="50%" y="50%" font-family="Arial" font-size="16" text-anchor="middle" dominant-baseline="middle" fill="black">LEO Asset Management</text>
+<svg width="240" height="120" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="120" fill="white"/>
+  
+  <!-- 金色圆环 -->
+  <circle cx="50" cy="45" r="20" fill="none" stroke="#FFD700" stroke-width="8" opacity="0.8"/>
+  <!-- 紫色圆环 -->
+  <circle cx="70" cy="45" r="15" fill="none" stroke="#8B5CF6" stroke-width="6" opacity="0.9"/>
+  
+  <!-- LEO 文字 -->
+  <text x="140" y="50" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" dominant-baseline="middle" fill="#8B5CF6">LEO</text>
+  <!-- Asset Management 文字 -->
+  <text x="140" y="75" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle" dominant-baseline="middle" fill="#8B5CF6">Asset Management</text>
 </svg> 

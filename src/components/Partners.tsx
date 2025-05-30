@@ -1,49 +1,33 @@
 import React from 'react';
 
 const Partners = () => {
-  // 合作伙伴图标数组，可以根据需要添加更多
+  // 合作伙伴数据 - 支持多种图片格式
   const partners = [
     {
-      name: "Oriental Patron",
-      logo: "/partners/oriental-patron.svg",
-      alt: "Oriental Patron Logo"
-    },
-    {
-      name: "Flamestone",
-      logo: "/partners/flamestone.svg",
-      alt: "Flamestone Logo"
-    },
-    {
-      name: "丰鑫投资",
-      logo: "/partners/fengxin.svg",
-      alt: "丰鑫投资 Logo"
+      name: "Flamestone Capital",
+      logo: "/partners/flamestone.png", // 支持PNG格式
+      alt: "Flamestone Capital Logo"
     },
     {
       name: "LEO Asset Management",
-      logo: "/partners/leo.svg",
+      logo: "/partners/leo.png", // 支持PNG格式
       alt: "LEO Asset Management Logo"
     },
-    // 重复伙伴以实现无缝滚动效果
+    {
+      name: "CITIC Securities CLSA",
+      logo: "/partners/citic-clsa.png", // 支持PNG格式
+      alt: "CITIC Securities CLSA Logo"
+    },
     {
       name: "Oriental Patron",
-      logo: "/partners/oriental-patron.svg",
+      logo: "/partners/oriental-patron.png", // 支持PNG格式
       alt: "Oriental Patron Logo"
     },
     {
-      name: "Flamestone",
-      logo: "/partners/flamestone.svg",
-      alt: "Flamestone Logo"
-    },
-    {
       name: "丰鑫投资",
-      logo: "/partners/fengxin.svg",
+      logo: "/partners/fengxin.png", // 支持PNG格式
       alt: "丰鑫投资 Logo"
-    },
-    {
-      name: "LEO Asset Management",
-      logo: "/partners/leo.svg",
-      alt: "LEO Asset Management Logo"
-    },
+    }
   ];
 
   return (
@@ -57,40 +41,57 @@ const Partners = () => {
         </h2>
         
         <div className="relative">
-          {/* 跑马灯容器 */}
-          <div className="relative overflow-hidden w-full">
-            {/* 第一个滚动行 */}
-            <div className="flex space-x-12 animate-marquee">
-              {partners.slice(0, 4).map((partner, index) => (
+          {/* 走马灯容器 */}
+          <div className="overflow-hidden w-full">
+            {/* 连续滚动的容器 */}
+            <div className="flex animate-infinite-scroll">
+              {/* 第一组 */}
+              {partners.map((partner, index) => (
                 <div 
-                  key={`row1-${index}`} 
-                  className="w-36 h-36 bg-white flex items-center justify-center p-4 rounded-lg dark:rounded-md shadow-lg border border-slate-200 dark:border-0 flex-shrink-0 hover:shadow-xl dark:hover:shadow-lg hover:scale-105 dark:hover:scale-100 transition-all duration-300"
+                  key={`set1-${index}`} 
+                  className="w-48 h-32 bg-white dark:bg-gray-800 flex items-center justify-center p-6 rounded-lg shadow-lg border border-slate-200 dark:border-gray-600 flex-shrink-0 mx-6 hover:shadow-xl transition-shadow duration-300"
                 >
                   <img 
                     src={partner.logo} 
                     alt={partner.alt} 
-                    className="max-w-full max-h-full object-contain"
+                    className="max-w-full max-h-full object-contain filter dark:brightness-90"
                   />
                 </div>
               ))}
-            </div>
-            
-            {/* 复制一份以实现无缝循环 */}
-            <div className="flex space-x-12 animate-marquee-reverse absolute top-0 left-0">
-              {partners.slice(4, 8).map((partner, index) => (
+              
+              {/* 第二组 - 确保无缝循环 */}
+              {partners.map((partner, index) => (
                 <div 
-                  key={`row2-${index}`} 
-                  className="w-36 h-36 bg-white flex items-center justify-center p-4 rounded-lg dark:rounded-md shadow-lg border border-slate-200 dark:border-0 flex-shrink-0 hover:shadow-xl dark:hover:shadow-lg hover:scale-105 dark:hover:scale-100 transition-all duration-300"
+                  key={`set2-${index}`} 
+                  className="w-48 h-32 bg-white dark:bg-gray-800 flex items-center justify-center p-6 rounded-lg shadow-lg border border-slate-200 dark:border-gray-600 flex-shrink-0 mx-6 hover:shadow-xl transition-shadow duration-300"
                 >
                   <img 
                     src={partner.logo} 
                     alt={partner.alt} 
-                    className="max-w-full max-h-full object-contain"
+                    className="max-w-full max-h-full object-contain filter dark:brightness-90"
+                  />
+                </div>
+              ))}
+
+              {/* 第三组 - 额外确保平滑 */}
+              {partners.map((partner, index) => (
+                <div 
+                  key={`set3-${index}`} 
+                  className="w-48 h-32 bg-white dark:bg-gray-800 flex items-center justify-center p-6 rounded-lg shadow-lg border border-slate-200 dark:border-gray-600 flex-shrink-0 mx-6 hover:shadow-xl transition-shadow duration-300"
+                >
+                  <img 
+                    src={partner.logo} 
+                    alt={partner.alt} 
+                    className="max-w-full max-h-full object-contain filter dark:brightness-90"
                   />
                 </div>
               ))}
             </div>
           </div>
+          
+          {/* 渐变遮罩效果 */}
+          <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none"></div>
         </div>
       </div>
     </div>

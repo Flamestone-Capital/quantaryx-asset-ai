@@ -16,6 +16,8 @@ import { advancedFeatures } from './hero/constants';
 import Simulator from './Simulator';
 import DataIntegrationVisual from './DataIntegrationVisual';
 import EnhancedTradingSignalBoard from './EnhancedTradingSignalBoard';
+import RealTimeTracking from './RealTimeTracking';
+import AutomatedTrading from './AutomatedTrading';
 
 const mockData = [
   { month: '1月', value: 40 },
@@ -38,6 +40,48 @@ const pieData = [
   { name: '不動產', value: 25 },
   { name: '另類投資', value: 15 },
   { name: '現金', value: 5 },
+];
+
+// 另类投资专用数据
+const alternativeInvestmentData = [
+  { name: '私募股權', value: 40 },
+  { name: '房地產基金', value: 25 },
+  { name: '對沖基金', value: 15 },
+  { name: '藝術品收藏', value: 12 },
+  { name: '商品期貨', value: 8 },
+];
+
+// 实时跟踪专用数据 - 显示日内价格波动
+const realTimeTrackingData = [
+  { date: '09:00', value: 5430000 },
+  { date: '09:15', value: 5448000 },
+  { date: '09:30', value: 5465000 },
+  { date: '09:45', value: 5452000 },
+  { date: '10:00', value: 5438000 },
+  { date: '10:15', value: 5421000 },
+  { date: '10:30', value: 5455000 },
+  { date: '10:45', value: 5472000 },
+  { date: '11:00', value: 5489000 },
+  { date: '11:15', value: 5507000 },
+  { date: '11:30', value: 5495000 },
+  { date: '11:45', value: 5478000 },
+  { date: '12:00', value: 5463000 },
+  { date: '12:15', value: 5445000 },
+  { date: '12:30', value: 5471000 },
+  { date: '12:45', value: 5488000 },
+  { date: '13:00', value: 5502000 },
+  { date: '13:15', value: 5519000 },
+  { date: '13:30', value: 5535000 },
+  { date: '13:45', value: 5521000 },
+  { date: '14:00', value: 5508000 },
+  { date: '14:15', value: 5492000 },
+  { date: '14:30', value: 5475000 },
+  { date: '14:45', value: 5458000 },
+  { date: '15:00', value: 5442000 },
+  { date: '15:15', value: 5467000 },
+  { date: '15:30', value: 5485000 },
+  { date: '15:45', value: 5501000 },
+  { date: '16:00', value: 5486000 },
 ];
 
 const portfolioData = [
@@ -87,6 +131,8 @@ const Hero = () => {
   const [showSimulator, setShowSimulator] = useState(false);
   const [chartType, setChartType] = useState('bar'); // 'bar', 'line', 'pie', 'advanced'
   const [showDataIntegration, setShowDataIntegration] = useState(false);
+  const [showRealTimeTracking, setShowRealTimeTracking] = useState(false);
+  const [showAutomatedTrading, setShowAutomatedTrading] = useState(false);
 
   const handleFeatureClick = (index: number) => {
     setActiveFeature(index);
@@ -95,6 +141,8 @@ const Hero = () => {
     // Reset all special views first
     setShowSimulator(false);
     setShowDataIntegration(false);
+    setShowRealTimeTracking(false);
+    setShowAutomatedTrading(false);
     
     // Change chart type based on the selected feature
     switch(index) {
@@ -117,6 +165,19 @@ const Hero = () => {
 
   const handleAdvancedFeatureClick = (feature: any) => {
     setSelectedFeature(feature);
+    
+    // 重置所有特殊视图
+    setShowRealTimeTracking(false);
+    setShowAutomatedTrading(false);
+    
+    // 如果选择的是实时跟踪功能，显示专门的实时跟踪界面
+    if (feature.id === 'real-time-tracking') {
+      setShowRealTimeTracking(true);
+    }
+    // 如果选择的是自动化交易功能，显示专门的自动化交易界面  
+    else if (feature.id === 'automated-trading') {
+      setShowAutomatedTrading(true);
+    }
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -130,12 +191,16 @@ const Hero = () => {
   };
 
   const renderChart = (chartType: string) => {
+    // 根据选中的功能决定使用哪个数据集
+    const chartData = selectedFeature?.id === 'alternative-investments' ? alternativeInvestmentData : pieData;
+    const lineData = selectedFeature?.id === 'real-time-tracking' ? realTimeTrackingData : portfolioData;
+    
     if (chartType === 'pie') {
       return (
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={pieData}
+              data={chartData}
               cx="50%"
               cy="50%"
               innerRadius={60}
@@ -145,7 +210,7 @@ const Hero = () => {
               dataKey="value"
               label={({name, percent}) => `${name} ${(percent * 100).toFixed(0)}%`}
             >
-              {pieData.map((entry, index) => (
+              {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
@@ -161,12 +226,17 @@ const Hero = () => {
     } else if (chartType === 'line') {
       return (
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={portfolioData}>
+          <LineChart data={lineData}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.2} stroke="var(--border)" />
             <XAxis dataKey="date" fontSize={10} tickLine={false} axisLine={false} tick={{ fill: '#ffffff' }} />
             <YAxis hide />
             <Tooltip 
-              formatter={(value) => [`$${Number(value).toLocaleString()}`, '表現']}
+              formatter={(value) => [
+                selectedFeature?.id === 'real-time-tracking' 
+                  ? `$${Number(value).toLocaleString()}` 
+                  : `$${Number(value).toLocaleString()}`,
+                selectedFeature?.id === 'real-time-tracking' ? '即時淨值' : '表現'
+              ]}
               labelStyle={{ color: '#ffffff', fontWeight: 'bold' }}
               itemStyle={{ color: '#ffffff', fontWeight: 'bold' }}
               cursor={{fill: 'rgba(155, 135, 245, 0.3)'}}
@@ -176,8 +246,8 @@ const Hero = () => {
               type="monotone" 
               dataKey="value" 
               stroke="#9b87f5" 
-              dot={false}
-              strokeWidth={2}
+              dot={selectedFeature?.id === 'real-time-tracking' ? { fill: '#9b87f5', strokeWidth: 2, r: 3 } : false}
+              strokeWidth={selectedFeature?.id === 'real-time-tracking' ? 3 : 2}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -291,6 +361,14 @@ const Hero = () => {
                 ) : showDataIntegration ? (
                   <div className="w-full h-[450px]">
                     <DataIntegrationVisual />
+                  </div>
+                ) : showRealTimeTracking ? (
+                  <div className="w-full h-[450px]">
+                    <RealTimeTracking />
+                  </div>
+                ) : showAutomatedTrading ? (
+                  <div className="w-full h-[450px]">
+                    <AutomatedTrading />
                   </div>
                 ) : (
                   <div className="w-full h-[450px] bg-gradient-to-br from-quantaryx-purple/50 to-quantaryx-brightblue/30 dark:from-quantaryx-dark-purple/40 dark:to-quantaryx-dark-blue/30 rounded-lg p-6">
@@ -459,7 +537,13 @@ const Hero = () => {
                 
                 <div>
                   <div className="h-64 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 mb-4">
-                    {renderChart(selectedFeature.chartType)}
+                    {selectedFeature.id === 'real-time-tracking' ? (
+                      <RealTimeTracking />
+                    ) : selectedFeature.id === 'automated-trading' ? (
+                      <AutomatedTrading />
+                    ) : (
+                      renderChart(selectedFeature.chartType)
+                    )}
                   </div>
                   
                   <div className="mt-3 p-4 bg-quantaryx-softblue/20 dark:bg-quantaryx-dark-purple/20 rounded-lg border border-quantaryx-softblue/30 dark:border-quantaryx-dark-purple/50 animate-fade-in">

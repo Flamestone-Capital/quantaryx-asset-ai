@@ -47,17 +47,6 @@ const PricingPopup = ({ isOpen, onClose }) => {
                 我們正在為不同規模的客戶打造靈活的訂閱方案。請填寫聯繫表單以獲取最新定價信息。
               </p>
             </div>
-            
-            <Button 
-              onClick={() => {
-                onClose();
-                const contactForm = document.getElementById('contact-form');
-                contactForm?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="bg-quantaryx-purple hover:bg-quantaryx-purple/90 text-white w-full py-6"
-            >
-              獲取定制方案
-            </Button>
           </motion.div>
         </motion.div>
       )}
@@ -107,6 +96,28 @@ const CTA = () => {
     }, 1000);
   };
 
+  const handleDemoRequest = () => {
+    // 显示提示信息，引导用户填写表格
+    toast({
+      title: "請求產品演示",
+      description: "請先填寫右側表格的聯繫信息，我們將安排專屬演示",
+      duration: 4000,
+    });
+    
+    // 高亮显示表格（不滚动）
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      // 添加高亮效果
+      const formContainer = contactForm.parentElement;
+      if (formContainer) {
+        formContainer.classList.add('ring-2', 'ring-quantaryx-purple', 'ring-opacity-50');
+        setTimeout(() => {
+          formContainer.classList.remove('ring-2', 'ring-quantaryx-purple', 'ring-opacity-50');
+        }, 3000);
+      }
+    }
+  };
+
   return (
     <div id="contact" className="bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,10 +131,7 @@ const CTA = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
-                onClick={() => {
-                  const contactForm = document.getElementById('contact-form');
-                  contactForm?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={handleDemoRequest}
                 className="bg-quantaryx-purple hover:bg-quantaryx-purple/90 text-white flex items-center gap-2"
               >
                 請求產品演示

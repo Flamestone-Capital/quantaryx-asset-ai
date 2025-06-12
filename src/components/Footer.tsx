@@ -42,7 +42,6 @@ const Footer = () => {
               <li><button onClick={() => scrollToSection('vision')} className="text-gray-300 hover:text-white transition-colors">關於我們</button></li>
               <li><button onClick={() => scrollToSection('vision')} className="text-gray-300 hover:text-white transition-colors">團隊</button></li>
               <li><button onClick={() => scrollToSection('investors')} className="text-gray-300 hover:text-white transition-colors">投資者關係</button></li>
-              <li><button onClick={() => scrollToSection('contact')} className="text-gray-300 hover:text-white transition-colors">新聞</button></li>
             </ul>
           </div>
           

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ProductCardProps {
   title: string;
@@ -35,6 +36,8 @@ const Popup: React.FC<PopupProps> = ({
   onContactClick, 
   onDemoClick 
 }) => {
+  const { t } = useTranslation();
+  
   if (!isOpen) return null;
   
   return createPortal(
@@ -71,25 +74,25 @@ const Popup: React.FC<PopupProps> = ({
             {isFinora ? (
               <>
                 <p className="text-xl mb-6 text-center text-gray-600 dark:text-gray-300">
-                  全方位的個人財務管理與資產分析平台
+                  {t('products.popup.finoraDescription')}
                 </p>
                 <Button 
                   onClick={onDemoClick}
                   className={`${color} hover:brightness-110 text-white w-full py-6`}
                 >
-                  查看演示
+                  {t('products.popup.viewDemo')}
                 </Button>
               </>
             ) : (
               <>
                 <p className="text-xl mb-6 text-center text-gray-600 dark:text-gray-300">
-                  即將上線，敬請期待
+                  {t('products.popup.comingSoon')}
                 </p>
                 <Button 
                   onClick={onContactClick}
                   className={`${color} hover:brightness-110 text-white w-full py-6`}
                 >
-                  加入等候名單
+                  {t('products.popup.joinWaitlist')}
                 </Button>
               </>
             )}

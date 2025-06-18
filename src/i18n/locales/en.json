@@ -1,0 +1,214 @@
+{
+  "navbar": {
+    "brand": "QuantaryX",
+    "products": "Products",
+    "vision": "Vision",
+    "investors": "Investors",
+    "contact": "Contact Us",
+    "requestDemo": "Request Demo",
+    "openMenu": "Open Menu",
+    "closeMenu": "Close Menu"
+  },
+  "hero": {
+    "title": "Next-Generation Asset Management Platform for Smart Investors",
+    "subtitle": "Combining AI intelligent analysis, real-time tracking, and automated investment strategies to provide comprehensive solutions for your wealth growth",
+    "ctaButton": "Start Free Trial",
+    "learnMore": "Learn More",
+    "features": {
+      "smartAnalysis": {
+        "title": "Smart Asset Analysis",
+        "description": "AI-enhanced asset value trend prediction and risk identification"
+      },
+      "autoOptimization": {
+        "title": "Automated Investment Optimization",
+        "description": "AI-driven investment strategy adjustments based on market behavior"
+      },
+      "dataIntegration": {
+        "title": "Intelligent Data Integration",
+        "description": "Automated parsing and correlation building of multi-source financial data"
+      },
+      "opportunityIdentification": {
+        "title": "Investment Opportunity Identification",
+        "description": "AI screening of high-value investment targets and market timing"
+      }
+    },
+    "aiInsight": {
+      "title": "AI Insights",
+      "performance": "Based on your historical performance, we recommend increasing",
+      "allocation": "15% allocation",
+      "riskWarning": "Current market volatility is high, proceed with caution"
+    },
+    "portfolioValue": "Portfolio Value",
+    "monthlyGrowth": "Monthly Growth",
+    "charts": {
+      "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      "assetTypes": {
+        "stocks": "Stocks",
+        "bonds": "Bonds",
+        "realEstate": "Real Estate",
+        "alternative": "Alternative",
+        "cash": "Cash"
+      },
+      "alternativeInvestments": {
+        "privateEquity": "Private Equity",
+        "realEstateFunds": "Real Estate Funds",
+        "hedgeFunds": "Hedge Funds",
+        "artCollections": "Art Collections",
+        "commodityFutures": "Commodities"
+      }
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "Tailored solutions for investors with different needs",
+    "finora": {
+      "title": "Finora",
+      "subtitle": "Smart Investment Management Platform",
+      "description": "Provides AI-driven investment advice and automated portfolio management for individual investors",
+      "features": ["AI Investment Advice", "Risk Assessment", "Auto Rebalancing"]
+    },
+    "wiselens": {
+      "title": "Wiselens",
+      "subtitle": "Institutional Asset Analysis",
+      "description": "Provides deep asset analysis and market insights for institutional investors",
+      "features": ["Deep Analysis", "Market Insights", "Risk Management"]
+    },
+    "nurocrm": {
+      "title": "NuroCRM",
+      "subtitle": "Customer Relationship Management",
+      "description": "Provides intelligent customer relationship management and investment tracking for financial advisors",
+      "features": ["Client Management", "Investment Tracking", "Report Generation"]
+    },
+    "deallens": {
+      "title": "DealLens",
+      "subtitle": "Trading Analysis Platform",
+      "description": "Provides real-time market analysis and trading signals for traders",
+      "features": ["Real-time Analysis", "Trading Signals", "Market Data"]
+    },
+    "requestDemo": "Request Product Demo"
+  },
+  "vision": {
+    "title": "Our Vision",
+    "subtitle": "Transforming the Future of FinTech",
+    "description": "QuantaryX is committed to making wealth management and growth accessible to everyone through innovative AI technology and intuitive user experience",
+    "values": {
+      "innovation": {
+        "title": "Innovation Driven",
+        "description": "Continuously pushing the boundaries of financial technology"
+      },
+      "security": {
+        "title": "Security First",
+        "description": "Adopting the highest level of security standards"
+      },
+      "transparency": {
+        "title": "Transparency & Integrity",
+        "description": "Providing completely transparent services to clients"
+      }
+    }
+  },
+  "investors": {
+    "title": "Investor Relations",
+    "subtitle": "Grow With Us",
+    "description": "QuantaryX is seeking strategic investment partners to build the future of financial technology together",
+    "stats": {
+      "users": "Active Users",
+      "assets": "Assets Under Management",
+      "growth": "Annual Growth Rate",
+      "satisfaction": "Customer Satisfaction"
+    }
+  },
+  "footer": {
+    "description": "Providing comprehensive asset visualization, intelligent decision-making, and automated execution platforms for high-net-worth individuals and professional investors.",
+    "sections": {
+      "products": "Products",
+      "company": "Company",
+      "contact": "Contact Us"
+    },
+    "company": {
+      "aboutUs": "About Us",
+      "team": "Team",
+      "investorRelations": "Investor Relations"
+    },
+    "contact": {
+      "email": "info@quantaryx.com",
+      "phone": "+852 3757 9783"
+    },
+    "legal": {
+      "copyright": "All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "security": "Security"
+    }
+  },
+  "pages": {
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "Sorry, the page you are looking for does not exist.",
+      "backHome": "Back to Home"
+    }
+  },
+  "realTimeTracking": {
+    "title": "Real-Time Tracking",
+    "portfolioValue": "Portfolio Value",
+    "currentValue": "$5,950,000",
+    "change": "+$520,000 (+9.6%)",
+    "timeRange": "Today",
+    "performance": {
+      "title": "Performance Analysis",
+      "dailyGain": "Daily Gain",
+      "totalReturn": "Total Return",
+      "volatility": "Volatility"
+    }
+  },
+  "automatedTrading": {
+    "title": "Automated Trading",
+    "subtitle": "AI-Driven Smart Trading System",
+    "strategyPerformance": "Strategy Performance",
+    "manual": "Manual Trading",
+    "automated": "AI Automated",
+    "tradingExecution": "Trading Execution Log",
+    "riskControl": "Risk Control",
+    "systemStatus": "System Status",
+    "executionCount": "Execution Count",
+    "metrics": {
+      "volatilityReduction": "Volatility Reduction",
+      "maxDrawdown": "Max Drawdown",
+      "sharpeRatio": "Sharpe Ratio",
+      "winRate": "Win Rate"
+    },
+    "actions": {
+      "buy": "Buy",
+      "sell": "Sell",
+      "rebalance": "Rebalance",
+      "stopLoss": "Stop Loss"
+    }
+  },
+  "cta": {
+    "title": "Ready to Start Your Smart Investment Journey?",
+    "subtitle": "Experience the powerful features of QuantaryX today and let AI empower your wealth growth",
+    "requestDemo": "Request Product Demo",
+    "startTrial": "Start Free Trial",
+    "contactSales": "Contact Sales Team"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "Switch Language"
+  }
+} 

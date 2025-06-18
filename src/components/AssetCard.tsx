@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 
 interface AssetCardProps {
   assetName: string;
@@ -14,6 +15,8 @@ const AssetCard: React.FC<AssetCardProps> = ({
   icon,
   delay,
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,7 +27,7 @@ const AssetCard: React.FC<AssetCardProps> = ({
       <div className="flex justify-between items-center mb-3">
         <div className="flex items-center">
           <span className="text-3xl mr-3">{icon}</span>
-          <h3 className="text-slate-800 dark:text-white font-medium text-lg">{assetName}</h3>
+          <h3 className="text-slate-800 dark:text-white font-medium text-lg">{t(assetName)}</h3>
         </div>
         <div className="bg-indigo-100 text-indigo-700 dark:bg-indigo-700 dark:text-white text-sm font-bold px-2 py-1 rounded-full">
           {percentage}%
@@ -41,7 +44,7 @@ const AssetCard: React.FC<AssetCardProps> = ({
       <div className="flex justify-between mt-3">
         <div className="flex items-center">
           <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse mr-2"></span>
-          <span className="text-slate-500 dark:text-slate-400 text-sm">AI建議配置</span>
+          <span className="text-slate-500 dark:text-slate-400 text-sm">{t('simulator.aiRecommendedAllocation')}</span>
         </div>
         <motion.div
           initial={{ scale: 1 }}

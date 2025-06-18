@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -20,36 +22,36 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">QuantaryX</h3>
+            <h3 className="text-xl font-bold mb-4">{t('navbar.brand')}</h3>
             <p className="text-gray-300">
-            為高資產個人與專業投資者提供全方位的資產可視化、智能決策與自動化執行平台。
+              {t('footer.description')}
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-bold mb-4">產品</h3>
+            <h3 className="text-lg font-bold mb-4">{t('footer.sections.products')}</h3>
             <ul className="space-y-2">
-              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">Finora</button></li>
-              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">Wiselens</button></li>
-              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">NuroCRM</button></li>
-              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">DealLens</button></li>
+              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">{t('products.finora.title')}</button></li>
+              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">{t('products.wiselens.title')}</button></li>
+              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">{t('products.nurocrm.title')}</button></li>
+              <li><button onClick={() => scrollToSection('products')} className="text-gray-300 hover:text-white transition-colors">{t('products.deallens.title')}</button></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-bold mb-4">公司</h3>
+            <h3 className="text-lg font-bold mb-4">{t('footer.sections.company')}</h3>
             <ul className="space-y-2">
-              <li><button onClick={() => scrollToSection('vision')} className="text-gray-300 hover:text-white transition-colors">關於我們</button></li>
-              <li><button onClick={() => scrollToSection('vision')} className="text-gray-300 hover:text-white transition-colors">團隊</button></li>
-              <li><button onClick={() => scrollToSection('investors')} className="text-gray-300 hover:text-white transition-colors">投資者關係</button></li>
+              <li><button onClick={() => scrollToSection('vision')} className="text-gray-300 hover:text-white transition-colors">{t('footer.company.aboutUs')}</button></li>
+              <li><button onClick={() => scrollToSection('vision')} className="text-gray-300 hover:text-white transition-colors">{t('footer.company.team')}</button></li>
+              <li><button onClick={() => scrollToSection('investors')} className="text-gray-300 hover:text-white transition-colors">{t('footer.company.investorRelations')}</button></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-bold mb-4">聯繫我們</h3>
+            <h3 className="text-lg font-bold mb-4">{t('footer.sections.contact')}</h3>
             <ul className="space-y-2">
-              <li className="text-gray-300">info@quantaryx.com</li>
-              <li className="text-gray-300">+852 3757 9783</li>
+              <li className="text-gray-300">{t('footer.contact.email')}</li>
+              <li className="text-gray-300">{t('footer.contact.phone')}</li>
               <li className="flex space-x-4 mt-4">
                 <button className="text-gray-300 hover:text-white transition-colors">
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -72,25 +74,25 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-gray-300">© {currentYear} QuantaryX. 版權所有。</div>
+          <div className="text-gray-300">© {currentYear} {t('navbar.brand')}. {t('footer.legal.copyright')}</div>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <button 
               onClick={() => navigate('/privacy')}
               className="text-gray-300 hover:text-white transition-colors text-sm"
             >
-              隱私政策
+              {t('footer.legal.privacy')}
             </button>
             <button 
               onClick={() => navigate('/terms')}
               className="text-gray-300 hover:text-white transition-colors text-sm"
             >
-              服務條款
+              {t('footer.legal.terms')}
             </button>
             <button 
               onClick={() => navigate('/security')}
               className="text-gray-300 hover:text-white transition-colors text-sm"
             >
-              安全性
+              {t('footer.legal.security')}
             </button>
           </div>
         </div>

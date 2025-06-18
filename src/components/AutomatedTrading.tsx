@@ -1,36 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Area, AreaChart } from 'recharts';
 import { TrendingUp, TrendingDown, ArrowRightLeft, Shield, Target, Zap, CheckCircle, AlertTriangle } from 'lucide-react';
-
-// 交易执行数据
-const tradingExecutions = [
-  { time: '09:30', action: '買入', asset: 'AAPL', quantity: 100, price: 175.50, status: 'completed' },
-  { time: '10:15', action: '賣出', asset: 'TSLA', quantity: 50, price: 242.80, status: 'completed' },
-  { time: '11:20', action: '再平衡', asset: 'MSFT', quantity: 75, price: 285.20, status: 'completed' },
-  { time: '13:45', action: '止損', asset: 'NVDA', quantity: 30, price: 420.15, status: 'completed' },
-  { time: '14:30', action: '買入', asset: 'GOOGL', quantity: 25, price: 138.90, status: 'pending' },
-];
-
-// 策略性能数据
-const strategyPerformance = [
-  { period: '1周', manual: 2.3, automated: 3.1, difference: 0.8 },
-  { period: '1月', manual: 5.2, automated: 7.8, difference: 2.6 },
-  { period: '3月', manual: 12.1, automated: 16.5, difference: 4.4 },
-  { period: '6月', manual: 18.7, automated: 25.2, difference: 6.5 },
-  { period: '1年', manual: 24.3, automated: 32.8, difference: 8.5 },
-];
-
-// 风险控制指标
-const riskMetrics = [
-  { metric: '波動率降低', value: '15%', trend: 'down', color: 'green' },
-  { metric: '最大回撤', value: '3.2%', trend: 'down', color: 'green' },
-  { metric: '夏普比率', value: '1.85', trend: 'up', color: 'blue' },
-  { metric: '勝率提升', value: '68%', trend: 'up', color: 'purple' },
-];
+import { useTranslation } from 'react-i18next';
 
 const AutomatedTrading = () => {
+  const { t } = useTranslation();
+
+  // 生成翻译后的交易执行数据
+  const getTradingExecutions = () => [
+    { time: '09:30', action: t('automatedTrading.actions.buy'), asset: 'AAPL', quantity: 100, price: 175.50, status: 'completed' },
+    { time: '10:15', action: t('automatedTrading.actions.sell'), asset: 'TSLA', quantity: 50, price: 242.80, status: 'completed' },
+    { time: '11:20', action: t('automatedTrading.actions.rebalance'), asset: 'MSFT', quantity: 75, price: 285.20, status: 'completed' },
+    { time: '13:45', action: t('automatedTrading.actions.stopLoss'), asset: 'NVDA', quantity: 30, price: 420.15, status: 'completed' },
+    { time: '14:30', action: t('automatedTrading.actions.buy'), asset: 'GOOGL', quantity: 25, price: 138.90, status: 'pending' },
+  ];
+
+  // 生成翻译后的策略性能数据
+  const getStrategyPerformance = () => [
+    { period: '1W', manual: 2.3, automated: 3.1, difference: 0.8 },
+    { period: '1M', manual: 5.2, automated: 7.8, difference: 2.6 },
+    { period: '3M', manual: 12.1, automated: 16.5, difference: 4.4 },
+    { period: '6M', manual: 18.7, automated: 25.2, difference: 6.5 },
+    { period: '1Y', manual: 24.3, automated: 32.8, difference: 8.5 },
+  ];
+
+  // 生成翻译后的风险控制指标
+  const getRiskMetrics = () => [
+    { metric: t('automatedTrading.metrics.volatilityReduction'), value: '15%', trend: 'down', color: 'green' },
+    { metric: t('automatedTrading.metrics.maxDrawdown'), value: '3.2%', trend: 'down', color: 'green' },
+    { metric: t('automatedTrading.metrics.sharpeRatio'), value: '1.85', trend: 'up', color: 'blue' },
+    { metric: t('automatedTrading.metrics.winRate'), value: '68%', trend: 'up', color: 'purple' },
+  ];
+
   const [activeStrategy, setActiveStrategy] = useState('rebalancing');
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [executionCount, setExecutionCount] = useState(0);
+  const [showMetrics, setShowMetrics] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setExecutionCount(getTradingExecutions().length);
+      setShowMetrics(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const tradingExecutions = getTradingExecutions();
+  const strategyPerformance = getStrategyPerformance();
+  const riskMetrics = getRiskMetrics();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -45,12 +63,12 @@ const AutomatedTrading = () => {
       <div className="flex justify-between items-center mb-3">
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-          <span className="text-xs font-medium">AI交易系統</span>
-          <span className="text-xs text-gray-500 dark:text-gray-400">運行中</span>
+          <span className="text-xs font-medium">{t('automatedTrading.title')}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">{t('automatedTrading.systemStatus')}</span>
         </div>
         <div className="text-right">
-          <div className="text-sm font-bold text-blue-600 dark:text-blue-400">自動執行</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">今日 5 筆交易</div>
+          <div className="text-sm font-bold text-blue-600 dark:text-blue-400">{t('automatedTrading.automated')}</div>
+          <div className="text-xs text-gray-500 dark:text-gray-400">{t('automatedTrading.executionCount')}: {executionCount}</div>
         </div>
       </div>
 
@@ -70,7 +88,7 @@ const AutomatedTrading = () => {
             <Tooltip 
               formatter={(value, name) => [
                 `${value}%`, 
-                name === 'manual' ? '手動交易' : name === 'automated' ? 'AI自動交易' : '收益差距'
+                name === 'manual' ? t('automatedTrading.manual') : name === 'automated' ? t('automatedTrading.automated') : t('automatedTrading.strategyPerformance')
               ]}
               labelStyle={{ color: 'var(--tooltip-text)', fontWeight: 'bold', fontSize: '10px' }}
               itemStyle={{ color: 'var(--tooltip-text)', fontWeight: 'bold', fontSize: '10px' }}
@@ -100,7 +118,7 @@ const AutomatedTrading = () => {
       <div className="mb-3">
         <h4 className="text-xs font-medium mb-2 flex items-center">
           <Zap className="w-3 h-3 mr-1 text-yellow-600 dark:text-yellow-400" />
-          即時交易執行
+          {t('automatedTrading.tradingExecution')}
         </h4>
         <div className="space-y-1">
           {tradingExecutions.slice(0, 2).map((trade, index) => (
@@ -113,8 +131,8 @@ const AutomatedTrading = () => {
                 )}
                 <span className="font-mono font-bold">{trade.time}</span>
                 <span className={`px-1 rounded text-xs ${
-                  trade.action === '買入' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                  trade.action === '賣出' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
+                  trade.action === t('automatedTrading.actions.buy') ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                  trade.action === t('automatedTrading.actions.sell') ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
                   'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
                 }`}>
                   {trade.action}
@@ -123,7 +141,7 @@ const AutomatedTrading = () => {
               </div>
               <div className="text-right">
                 <div className="font-mono">${trade.price}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">{trade.quantity}股</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">{trade.quantity} {t('common.shares')}</div>
               </div>
             </div>
           ))}

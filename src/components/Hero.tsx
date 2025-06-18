@@ -18,38 +18,7 @@ import DataIntegrationVisual from './DataIntegrationVisual';
 import EnhancedTradingSignalBoard from './EnhancedTradingSignalBoard';
 import RealTimeTracking from './RealTimeTracking';
 import AutomatedTrading from './AutomatedTrading';
-
-const mockData = [
-  { month: '1月', value: 40 },
-  { month: '2月', value: 60 },
-  { month: '3月', value: 30 },
-  { month: '4月', value: 70 },
-  { month: '5月', value: 50 },
-  { month: '6月', value: 80 },
-  { month: '7月', value: 40 },
-  { month: '8月', value: 90 },
-  { month: '9月', value: 60 },
-  { month: '10月', value: 70 },
-  { month: '11月', value: 50 },
-  { month: '12月', value: 60 },
-];
-
-const pieData = [
-  { name: '股票', value: 35 },
-  { name: '債券', value: 20 },
-  { name: '不動產', value: 25 },
-  { name: '另類投資', value: 15 },
-  { name: '現金', value: 5 },
-];
-
-// 另类投资专用数据
-const alternativeInvestmentData = [
-  { name: '私募股權', value: 40 },
-  { name: '房地產基金', value: 25 },
-  { name: '對沖基金', value: 15 },
-  { name: '藝術品收藏', value: 12 },
-  { name: '商品期貨', value: 8 },
-];
+import { useTranslation } from 'react-i18next';
 
 // 实时跟踪专用数据 - 显示日内价格波动
 const realTimeTrackingData = [
@@ -101,29 +70,6 @@ const portfolioData = [
 
 const COLORS = ['#9b87f5', '#33C3F0', '#FF8042', '#7E69AB', '#1EAEDB'];
 
-const AIFeatures = [
-  {
-    icon: <Brain className="h-5 w-5" />,
-    title: "智慧資產分析",
-    description: "AI強化的資產淨值趨勢預測與風險識別"
-  },
-  {
-    icon: <ChartBar className="h-5 w-5" />,
-    title: "自動投資優化",
-    description: "基於市場行為的AI驅動投資策略調整"
-  },
-  {
-    icon: <Database className="h-5 w-5" />,
-    title: "智能資料整合",
-    description: "多源財務數據自動解析與關聯構建"
-  },
-  {
-    icon: <Search className="h-5 w-5" />,
-    title: "投資機會識別",
-    description: "AI篩選高價值投資標的與市場時機"
-  }
-];
-
 const Hero = () => {
   const [activeFeature, setActiveFeature] = useState(0);
   const [showAIInsight, setShowAIInsight] = useState(false);
@@ -133,6 +79,69 @@ const Hero = () => {
   const [showDataIntegration, setShowDataIntegration] = useState(false);
   const [showRealTimeTracking, setShowRealTimeTracking] = useState(false);
   const [showAutomatedTrading, setShowAutomatedTrading] = useState(false);
+  const { t } = useTranslation();
+
+  // 生成翻译后的图表数据
+  const getMockData = () => {
+    const months = t('hero.charts.months', { returnObjects: true }) as string[];
+    return [
+      { month: months[0], value: 40 },
+      { month: months[1], value: 60 },
+      { month: months[2], value: 30 },
+      { month: months[3], value: 70 },
+      { month: months[4], value: 50 },
+      { month: months[5], value: 80 },
+      { month: months[6], value: 40 },
+      { month: months[7], value: 90 },
+      { month: months[8], value: 60 },
+      { month: months[9], value: 70 },
+      { month: months[10], value: 50 },
+      { month: months[11], value: 60 },
+    ];
+  };
+
+  const getPieData = () => {
+    return [
+      { name: t('hero.charts.assetTypes.stocks'), value: 35 },
+      { name: t('hero.charts.assetTypes.bonds'), value: 20 },
+      { name: t('hero.charts.assetTypes.realEstate'), value: 25 },
+      { name: t('hero.charts.assetTypes.alternative'), value: 15 },
+      { name: t('hero.charts.assetTypes.cash'), value: 5 },
+    ];
+  };
+
+  const getAlternativeInvestmentData = () => {
+    return [
+      { name: t('hero.charts.alternativeInvestments.privateEquity'), value: 40 },
+      { name: t('hero.charts.alternativeInvestments.realEstateFunds'), value: 25 },
+      { name: t('hero.charts.alternativeInvestments.hedgeFunds'), value: 15 },
+      { name: t('hero.charts.alternativeInvestments.artCollections'), value: 12 },
+      { name: t('hero.charts.alternativeInvestments.commodityFutures'), value: 8 },
+    ];
+  };
+
+  const AIFeatures = [
+    {
+      icon: <Brain className="h-5 w-5" />,
+      title: t('hero.features.smartAnalysis.title'),
+      description: t('hero.features.smartAnalysis.description')
+    },
+    {
+      icon: <ChartBar className="h-5 w-5" />,
+      title: t('hero.features.autoOptimization.title'),
+      description: t('hero.features.autoOptimization.description')
+    },
+    {
+      icon: <Database className="h-5 w-5" />,
+      title: t('hero.features.dataIntegration.title'),
+      description: t('hero.features.dataIntegration.description')
+    },
+    {
+      icon: <Search className="h-5 w-5" />,
+      title: t('hero.features.opportunityIdentification.title'),
+      description: t('hero.features.opportunityIdentification.description')
+    }
+  ];
 
   const handleFeatureClick = (index: number) => {
     setActiveFeature(index);
@@ -192,7 +201,7 @@ const Hero = () => {
 
   const renderChart = (chartType: string) => {
     // 根据选中的功能决定使用哪个数据集
-    const chartData = selectedFeature?.id === 'alternative-investments' ? alternativeInvestmentData : pieData;
+    const chartData = selectedFeature?.id === 'alternative-investments' ? getAlternativeInvestmentData() : getPieData();
     const lineData = selectedFeature?.id === 'real-time-tracking' ? realTimeTrackingData : portfolioData;
     
     if (chartType === 'pie') {
@@ -215,7 +224,7 @@ const Hero = () => {
               ))}
             </Pie>
             <Tooltip 
-              formatter={(value) => [`${value}%`, '占比']}
+              formatter={(value) => [`${value}%`, t('hero.charts.tooltips.percentage')]}
               labelStyle={{ color: '#ffffff', fontWeight: 'bold' }}
               itemStyle={{ color: '#ffffff', fontWeight: 'bold' }}
               contentStyle={{ backgroundColor: 'rgba(42, 47, 65, 0.95)', borderColor: '#4a5568', color: '#ffffff' }}
@@ -235,7 +244,7 @@ const Hero = () => {
                 selectedFeature?.id === 'real-time-tracking' 
                   ? `$${Number(value).toLocaleString()}` 
                   : `$${Number(value).toLocaleString()}`,
-                selectedFeature?.id === 'real-time-tracking' ? '即時淨值' : '表現'
+                selectedFeature?.id === 'real-time-tracking' ? t('hero.charts.tooltips.realTimeValue') : t('hero.charts.tooltips.performance')
               ]}
               labelStyle={{ color: '#ffffff', fontWeight: 'bold' }}
               itemStyle={{ color: '#ffffff', fontWeight: 'bold' }}
@@ -259,12 +268,12 @@ const Hero = () => {
     } else {
       return (
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={mockData} barSize={20}>
+          <BarChart data={getMockData()} barSize={20}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.2} stroke="var(--border)" />
             <XAxis dataKey="month" fontSize={10} tickLine={false} axisLine={false} tick={{ fill: '#ffffff' }} />
             <YAxis hide />
             <Tooltip 
-              formatter={(value) => [`$${Number(value).toLocaleString()}`, '淨值']}
+              formatter={(value) => [`$${Number(value).toLocaleString()}`, t('hero.charts.tooltips.netValue')]}
               labelStyle={{ color: '#ffffff', fontWeight: 'bold' }}
               itemStyle={{ color: '#ffffff', fontWeight: 'bold' }}
               cursor={{fill: 'rgba(155, 135, 245, 0.3)'}}
@@ -290,17 +299,17 @@ const Hero = () => {
             <div className="opacity-0 animate-fade-in">
               <div className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium bg-quantaryx-softblue dark:bg-quantaryx-dark-purple/30 text-quantaryx-darkblue dark:text-white mb-6">
                 <Brain className="h-4 w-4 mr-1.5" />
-                <span>新一代AI財富管理系統</span>
+                <span>{t('hero.title')}</span>
               </div>
             </div>
             
             <h1 className="opacity-0 animate-fade-in animate-delay-200 text-4xl tracking-tight font-bold text-gray-900 dark:text-white sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl">
-              <span className="block">用人工智能</span>
-              <span className="block text-gradient">重新定義資產掌控</span>
+              <span className="block">{t('hero.mainTitle.line1')}</span>
+              <span className="block text-gradient">{t('hero.mainTitle.line2')}</span>
             </h1>
             
             <p className="opacity-0 animate-fade-in animate-delay-300 mt-3 text-base text-gray-500 dark:text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-              QuantaryX 整合AI深度學習、知識圖譜與自然語言處理技術，為高資產個人與專業投資者提供全方位的資產可視化、智能決策與自動化執行平台。
+              {t('hero.description')}
             </p>
             
             <div className="opacity-0 animate-fade-in animate-delay-400 mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
@@ -308,17 +317,17 @@ const Hero = () => {
                 <Button 
                   onClick={() => scrollToSection('contact')}
                   className="bg-quantaryx-purple hover:bg-quantaryx-purple/90 dark:bg-quantaryx-dark-purple dark:hover:bg-quantaryx-dark-purple/90 text-white px-8 py-6 text-lg">
-                  開始使用
+                  {t('hero.ctaButton')}
                 </Button>
                 <Button 
                   onClick={() => scrollToSection('products')}
                   variant="outline" 
                   className="border-quantaryx-purple text-quantaryx-purple dark:border-quantaryx-dark-purple dark:text-quantaryx-dark-purple hover:bg-quantaryx-purple/10 dark:hover:bg-quantaryx-dark-purple/10 px-8 py-6 text-lg">
-                  了解更多
+                  {t('hero.learnMore')}
                 </Button>
               </div>
               <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                專為高資產個人與專業投資者設計
+                {t('hero.subtitle')}
               </p>
             </div>
 
@@ -374,7 +383,7 @@ const Hero = () => {
                   <div className="w-full h-[450px] bg-gradient-to-br from-quantaryx-purple/50 to-quantaryx-brightblue/30 dark:from-quantaryx-dark-purple/40 dark:to-quantaryx-dark-blue/30 rounded-lg p-6">
                     <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl animate-float p-6 h-full">
                       {/* 如果是投資機會識別功能，则只显示图表，不显示额外的文本 */}
-                      {AIFeatures[activeFeature].title === "投資機會識別" ? (
+                      {AIFeatures[activeFeature].title === t('hero.features.opportunityIdentification.title') ? (
                         <div className="h-full w-full">
                           {renderChart(chartType)}
                         </div>
@@ -383,9 +392,9 @@ const Hero = () => {
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center">
                               <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                              <span className="text-sm font-medium dark:text-white">資產總覽</span>
+                              <span className="text-sm font-medium dark:text-white">{t('hero.assetOverview')}</span>
                             </div>
-                            <span className="text-2xl font-bold dark:text-white">$5.43M</span>
+                            <span className="text-2xl font-bold dark:text-white">{t('hero.portfolioValue')}</span>
                           </div>
 
                           <div className="h-60 w-full">
@@ -396,12 +405,12 @@ const Hero = () => {
                             <div className="mt-3 p-3 bg-quantaryx-softblue/20 dark:bg-quantaryx-dark-purple/20 rounded-lg border border-quantaryx-softblue/30 dark:border-quantaryx-dark-purple/50 animate-fade-in text-left">
                               <div className="flex items-center mb-1">
                                 <Brain className="h-4 w-4 text-quantaryx-purple dark:text-quantaryx-dark-purple mr-2" />
-                                <span className="text-sm font-medium text-quantaryx-darkblue dark:text-white">AI 智能洞察</span>
+                                <span className="text-sm font-medium text-quantaryx-darkblue dark:text-white">{t('hero.aiInsight.title')}</span>
                               </div>
                               <p className="text-xs text-gray-600 dark:text-gray-300">
-                                {AIFeatures[activeFeature].title === "智慧資產分析" && "分析顯示您的資產在8月達到高峰，建議關注流動性分配以優化年底稅務籌劃。"}
-                                {AIFeatures[activeFeature].title === "自動投資優化" && "根據您的風險偏好與市場波動，AI推薦增加10%的防禦性資產以平衡投資組合。"}
-                                {AIFeatures[activeFeature].title === "智能資料整合" && "系統已自動整合12個金融機構的資料，並識別出3個重複計算的資產項目。"}
+                                {AIFeatures[activeFeature].title === t('hero.features.smartAnalysis.title') && t('hero.insights.smartAnalysis')}
+                                {AIFeatures[activeFeature].title === t('hero.features.autoOptimization.title') && t('hero.insights.autoOptimization')}
+                                {AIFeatures[activeFeature].title === t('hero.features.dataIntegration.title') && t('hero.insights.dataIntegration')}
                               </p>
                             </div>
                           )}
@@ -421,10 +430,10 @@ const Hero = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-4">
-              QuantaryX 核心 AI 功能
+              {t('hero.advancedFeatures.title')}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              滑動卡片探索我們如何運用人工智能重新定義財富管理體驗
+              {t('hero.advancedFeatures.subtitle')}
             </p>
           </div>
           
@@ -439,33 +448,33 @@ const Hero = () => {
             <CarouselContent className="-ml-1">
               {advancedFeatures.map((feature) => (
                 <CarouselItem key={feature.id} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
+                  <div className="p-1 h-full">
                     <Card 
-                      className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border h-full ${
+                      className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border h-[320px] flex flex-col ${
                         selectedFeature?.id === feature.id 
                           ? 'border-quantaryx-purple dark:border-quantaryx-dark-purple scale-[1.02]' 
                           : 'border-gray-100 dark:border-gray-700'
                       }`}
                       onClick={() => setSelectedFeature(feature)}
                     >
-                      <CardHeader>
+                      <CardHeader className="flex-shrink-0">
                         <div className="flex items-center mb-2">
                           {feature.icon}
-                          <CardTitle className="ml-3 text-lg dark:text-white">{feature.title}</CardTitle>
+                          <CardTitle className="ml-3 text-lg dark:text-white">{t(feature.title)}</CardTitle>
                         </div>
-                        <CardDescription className="dark:text-gray-300">{feature.description}</CardDescription>
+                        <CardDescription className="dark:text-gray-300">{t(feature.description)}</CardDescription>
                       </CardHeader>
-                      <CardContent>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">{feature.details}</p>
+                      <CardContent className="flex-grow">
+                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">{t(feature.details)}</p>
                       </CardContent>
-                      <CardFooter>
+                      <CardFooter className="flex-shrink-0">
                         <Button 
                           variant="ghost" 
                           size="sm" 
                           className="text-quantaryx-purple dark:text-quantaryx-dark-purple mt-2 px-0"
                           onClick={() => setSelectedFeature(feature)}
                         >
-                          了解更多 <ArrowRight className="ml-1 h-4 w-4" />
+                          {t('hero.learnMore')} <ArrowRight className="ml-1 h-4 w-4" />
                         </Button>
                       </CardFooter>
                     </Card>
@@ -485,7 +494,7 @@ const Hero = () => {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center">
                   {selectedFeature.icon}
-                  <h3 className="ml-3 font-bold text-xl dark:text-white">{selectedFeature.title}</h3>
+                  <h3 className="ml-3 font-bold text-xl dark:text-white">{t(selectedFeature.title)}</h3>
                 </div>
                 <Button 
                   variant="ghost" 
@@ -493,30 +502,30 @@ const Hero = () => {
                   onClick={() => setSelectedFeature(null)}
                   className="text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700"
                 >
-                  關閉
+                  {t('common.close')}
                 </Button>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div>
                   <div className="mb-6">
-                    <h4 className="font-medium mb-2 dark:text-white">功能詳情</h4>
-                    <p className="text-gray-700 dark:text-gray-300">{selectedFeature.details}</p>
+                    <h4 className="font-medium mb-2 dark:text-white">{t('hero.featureDetails')}</h4>
+                    <p className="text-gray-700 dark:text-gray-300">{t(selectedFeature.details)}</p>
                   </div>
                   
                   <div className="mb-6">
                     <h4 className="font-medium mb-2 flex items-center dark:text-white">
                       <span className="inline-block w-2 h-2 bg-quantaryx-purple dark:bg-quantaryx-dark-purple rounded-full mr-2"></span>
-                      獲取優勢
+                      {t('hero.getAdvantage')}
                     </h4>
                     <p className="text-gray-700 dark:text-gray-300 text-sm border-l-2 border-quantaryx-purple/30 dark:border-quantaryx-dark-purple/50 pl-3 py-1">
-                      {selectedFeature.uniqueFeature}
+                      {t(selectedFeature.uniqueFeature)}
                     </p>
                   </div>
                   
                   <h4 className="font-medium mb-3 flex items-center dark:text-white">
                     <Brain className="h-4 w-4 mr-2 text-quantaryx-purple dark:text-quantaryx-dark-purple" />
-                    AI 驅動能力
+                    {t('hero.aiCapabilities')}
                   </h4>
                   
                   <ScrollArea className="h-[180px] border dark:border-gray-700 rounded p-2 dark:bg-gray-900">
@@ -528,7 +537,7 @@ const Hero = () => {
                               <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                           </span>
-                          <span className="text-sm dark:text-gray-300">{capability}</span>
+                          <span className="text-sm dark:text-gray-300">{t(capability)}</span>
                         </li>
                       ))}
                     </ul>
@@ -549,10 +558,10 @@ const Hero = () => {
                   <div className="mt-3 p-4 bg-quantaryx-softblue/20 dark:bg-quantaryx-dark-purple/20 rounded-lg border border-quantaryx-softblue/30 dark:border-quantaryx-dark-purple/50 animate-fade-in">
                     <div className="flex items-center mb-2">
                       <Brain className="h-4 w-4 text-quantaryx-purple dark:text-quantaryx-dark-purple mr-2" />
-                      <span className="text-sm font-medium text-quantaryx-darkblue dark:text-white">AI 智能洞察</span>
+                      <span className="text-sm font-medium text-quantaryx-darkblue dark:text-white">{t('hero.aiInsight.title')}</span>
                     </div>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {selectedFeature.aiInsight}
+                      {t(selectedFeature.aiInsight)}
                     </p>
                   </div>
                 </div>

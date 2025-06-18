@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp, ArrowDown, Check, TrendingUp, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // 生成模拟K线数据
 const generateCandlestickData = (count: number) => {
@@ -62,6 +63,7 @@ const addTradingSignals = (data: any[]) => {
 };
 
 const AITradingSignalBoard = () => {
+  const { t } = useTranslation();
   const [candlestickData, setCandlestickData] = useState<any[]>([]);
   const [showOrderConfirmation, setShowOrderConfirmation] = useState(false);
   const [activeSignalIndex, setActiveSignalIndex] = useState<number | null>(null);
@@ -150,7 +152,7 @@ const AITradingSignalBoard = () => {
       {/* AI评分 */}
       <div className="absolute top-4 right-4 bg-gray-800/80 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-blue-500/30 shadow-lg z-10">
         <div className="flex items-center">
-          <span className="text-gray-400 text-sm mr-2">AI 评分:</span>
+          <span className="text-gray-400 text-sm mr-2">{t('common.aiScore')}:</span>
           <span className="text-white font-bold">{aiScore}/10</span>
           <div className="ml-2 w-16 h-2 bg-gray-700 rounded-full overflow-hidden">
             <div 
@@ -305,35 +307,35 @@ const AITradingSignalBoard = () => {
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-white flex items-center">
                 <Check size={16} className="mr-1 text-green-500" />
-                交易已执行
+                {t('automatedTrading.executionCount')}
               </h3>
               <div className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full text-xs font-medium">
-                买入
+                {t('automatedTrading.actions.buy')}
               </div>
             </div>
             
             <div className="space-y-2 mb-3">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">价格:</span>
+                <span className="text-gray-400">{t('common.price')}:</span>
                 <span className="text-white">${orderDetails.price}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">数量:</span>
-                <span className="text-white">{orderDetails.quantity} 股</span>
+                <span className="text-gray-400">{t('common.quantity')}:</span>
+                <span className="text-white">{orderDetails.quantity} {t('common.shares')}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">总金额:</span>
+                <span className="text-gray-400">{t('common.totalAmount')}:</span>
                 <span className="text-white">${orderDetails.total}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">时间:</span>
+                <span className="text-gray-400">{t('common.time')}:</span>
                 <span className="text-white">{new Date().toLocaleTimeString()}</span>
               </div>
             </div>
             
             <div className="text-xs text-gray-400 flex items-start">
               <AlertCircle size={12} className="mr-1 mt-0.5 text-blue-400" />
-              AI 已根据市场信号自动执行最优交易策略
+              {t('automatedTrading.subtitle')}
             </div>
           </div>
         )}
@@ -343,7 +345,7 @@ const AITradingSignalBoard = () => {
       <div className="mt-4 bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-blue-500/30 shadow-lg">
         <p className="text-gray-300 text-sm flex items-center">
           <TrendingUp size={14} className="mr-2 text-blue-400" />
-          AI 已识别交易机会，并自动执行策略入场。
+          {t('automatedTrading.systemStatus')}
         </p>
       </div>
     </div>

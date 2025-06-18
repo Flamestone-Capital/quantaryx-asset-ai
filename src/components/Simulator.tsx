@@ -1,61 +1,62 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AssetCard from "./AssetCard";
+import { useTranslation } from 'react-i18next';
 
 // 市场情境选项
 const marketScenarios = [
-  { value: "bull", label: "牛市" },
-  { value: "bear", label: "熊市" },
-  { value: "volatile", label: "高波動" },
+  { value: "bull", label: "simulator.marketScenarios.bull" },
+  { value: "bear", label: "simulator.marketScenarios.bear" },
+  { value: "volatile", label: "simulator.marketScenarios.volatile" },
 ];
 
 // 各种市场情境下的投资建议
 const investmentRecommendations = {
   bull: [
-    { assetName: "AI科技股", percentage: 60, icon: "💻" },
-    { assetName: "債券", percentage: 30, icon: "📜" },
-    { assetName: "黃金", percentage: 10, icon: "🔶" },
+    { assetName: "simulator.assets.aiTech", percentage: 60, icon: "💻" },
+    { assetName: "simulator.assets.bonds", percentage: 30, icon: "📜" },
+    { assetName: "simulator.assets.gold", percentage: 10, icon: "🔶" },
   ],
   bear: [
-    { assetName: "AI科技股", percentage: 20, icon: "💻" },
-    { assetName: "債券", percentage: 60, icon: "📜" },
-    { assetName: "黃金", percentage: 20, icon: "🔶" },
+    { assetName: "simulator.assets.aiTech", percentage: 20, icon: "💻" },
+    { assetName: "simulator.assets.bonds", percentage: 60, icon: "📜" },
+    { assetName: "simulator.assets.gold", percentage: 20, icon: "🔶" },
   ],
   volatile: [
-    { assetName: "AI科技股", percentage: 40, icon: "💻" },
-    { assetName: "債券", percentage: 30, icon: "📜" },
-    { assetName: "黃金", percentage: 30, icon: "🔶" },
+    { assetName: "simulator.assets.aiTech", percentage: 40, icon: "💻" },
+    { assetName: "simulator.assets.bonds", percentage: 30, icon: "📜" },
+    { assetName: "simulator.assets.gold", percentage: 30, icon: "🔶" },
   ],
 };
 
 // 老虎机卷轴元素 - 简化版
 const slotItems = [
   { 
-    name: "黃金", 
+    name: "simulator.assets.gold", 
     icon: <div className="bg-yellow-100 dark:bg-indigo-900/60 rounded-md w-8 h-8 flex items-center justify-center border border-yellow-300 dark:border-indigo-400/30">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="12,4 16,12 12,20 8,12" fill="none" stroke="#EAB308" strokeWidth="2" />
         <circle cx="12" cy="12" r="2" fill="#EAB308" />
       </svg>
     </div>,
-    label: "黃金"
+    label: "simulator.assets.gold"
   },
   { 
-    name: "AI股", 
+    name: "simulator.assets.aiStocks", 
     icon: <div className="bg-cyan-500 rounded-full w-8 h-8 flex items-center justify-center">
       <span className="text-xs text-white font-bold">AI</span>
     </div>,
-    label: "AI股"
+    label: "simulator.assets.aiStocks"
   },
   { 
-    name: "債券", 
+    name: "simulator.assets.bonds", 
     icon: <div className="bg-purple-100 dark:bg-indigo-900/60 rounded-md w-8 h-8 flex items-center justify-center border border-purple-300 dark:border-indigo-400/30">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="5" y="5" width="14" height="14" rx="2" fill="none" stroke="#8b5cf6" strokeWidth="2" />
         <path d="M5 9h14" stroke="#8b5cf6" strokeWidth="2" />
       </svg>
     </div>,
-    label: "債券"
+    label: "simulator.assets.bonds"
   },
 ];
 
@@ -67,6 +68,7 @@ const marketResults = {
 };
 
 const Simulator = () => {
+  const { t, i18n } = useTranslation();
   const [selectedScenario, setSelectedScenario] = useState("bull");
   const [isSpinning, setIsSpinning] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -80,6 +82,26 @@ const Simulator = () => {
     { items: [...slotItems], currentIndex: 2, spinning: false },
   ]);
 
+  // 获取分析完成的本地化文本
+  const getAnalysisCompleteText = () => {
+    const scenarioTranslation = t(`simulator.marketScenarios.${selectedScenario}`);
+    if (i18n.language === 'zh') {
+      return `AI已為${scenarioTranslation}條件生成最佳投資配置`;
+    } else {
+      return `AI has generated optimal investment allocation for ${scenarioTranslation} market conditions`;
+    }
+  };
+
+  // 获取AI洞察的本地化文本  
+  const getInsightText = () => {
+    const scenarioTranslation = t(`simulator.marketScenarios.${selectedScenario}`);
+    if (i18n.language === 'zh') {
+      return `根據您選擇的${scenarioTranslation}市場情境，AI推薦上述資產配置以平衡收益和風險。此策略考慮了當前市場波動性和長期增長潛力。`;
+    } else {
+      return `Based on your selected ${scenarioTranslation} market scenario, AI recommends the above asset allocation to balance returns and risks. This strategy considers current market volatility and long-term growth potential.`;
+    }
+  };
+
   // 处理投币事件
   const handleInsertCoin = () => {
     if (isSpinning) return;
@@ -89,7 +111,7 @@ const Simulator = () => {
     try {
       coinSound.play();
     } catch (e) {
-      console.log("浏览器阻止了自动播放音效");
+      console.log("Browser blocked auto-play audio");
     }
     
     setHasInsertedCoin(true);
@@ -109,7 +131,7 @@ const Simulator = () => {
     try {
       spinSound.play();
     } catch (e) {
-      console.log("浏览器阻止了自动播放音效");
+      console.log("Browser blocked auto-play audio");
     }
     
     // 设置每个卷轴旋转 
@@ -160,7 +182,7 @@ const Simulator = () => {
         try {
           winSound.play();
         } catch (e) {
-          console.log("浏览器阻止了自动播放音效");
+          console.log("Browser blocked auto-play audio");
         }
       }, 500);
     }, 2500);
@@ -188,15 +210,15 @@ const Simulator = () => {
       <div className="relative z-10 p-4 md:p-6 h-[450px] overflow-auto scrollbar-thin scrollbar-thumb-indigo-500/30 scrollbar-track-transparent">
         <div className="text-center mb-4">
           <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 dark:from-indigo-400 dark:via-cyan-300 dark:to-indigo-400 mb-2">
-            AI投資策略轉轉樂
+            {t('simulator.title')}
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-sm">選擇市場情境，投入模擬幣獲取AI投資建議</p>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">{t('simulator.subtitle')}</p>
         </div>
         
         <div className="max-w-md mx-auto">
           {/* 情境选择 */}
           <div className="mb-4">
-            <label className="block text-slate-600 dark:text-slate-300 text-sm font-medium mb-2">選擇市場情境</label>
+            <label className="block text-slate-600 dark:text-slate-300 text-sm font-medium mb-2">{t('simulator.selectMarket')}</label>
             <div className="relative">
               <select
                 value={selectedScenario}
@@ -206,7 +228,7 @@ const Simulator = () => {
               >
                 {marketScenarios.map((scenario) => (
                   <option key={scenario.value} value={scenario.value}>
-                    {scenario.label}
+                    {t(scenario.label)}
                   </option>
                 ))}
               </select>
@@ -250,7 +272,7 @@ const Simulator = () => {
                     >
                       <span className="text-xs">AI</span>
                     </motion.div>
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400">智能投資機</span>
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400">{t('simulator.aiMachine')}</span>
                   </div>
                   <div className="flex space-x-2">
                     <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
@@ -295,7 +317,7 @@ const Simulator = () => {
                             <div className="mb-1">
                               {slotItems[reel.currentIndex].icon}
                             </div>
-                            <span className="text-[8px] text-slate-800 dark:text-white font-bold">{slotItems[reel.currentIndex].label}</span>
+                            <span className="text-[8px] text-slate-800 dark:text-white font-bold">{t(slotItems[reel.currentIndex].label)}</span>
                           </div>
                         )}
                         
@@ -318,7 +340,7 @@ const Simulator = () => {
                                 <div className="mb-1">
                                   {item.icon}
                                 </div>
-                                <span className="text-[8px] text-slate-800 dark:text-white font-bold">{item.label}</span>
+                                <span className="text-[8px] text-slate-800 dark:text-white font-bold">{t(item.label)}</span>
                               </div>
                             ))}
                           </motion.div>
@@ -346,7 +368,7 @@ const Simulator = () => {
                         <div className="absolute inset-0 rounded-full shadow-[inset_0_0_15px_rgba(0,0,0,0.5)]"></div>
                         
                         <div className="relative z-10 font-bold text-yellow-900 text-lg">
-                          {hasInsertedCoin ? "✓" : "投幣"}
+                          {hasInsertedCoin ? "✓" : t('simulator.insertCoin')}
                         </div>
                         
                         {hasInsertedCoin && (
@@ -357,7 +379,7 @@ const Simulator = () => {
                           ></motion.div>
                         )}
                       </div>
-                      <span className="mt-2 text-yellow-600 dark:text-yellow-500 font-medium text-xs bg-white/80 dark:bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm border border-slate-200 dark:border-0">投入模擬幣</span>
+                      <span className="mt-2 text-yellow-600 dark:text-yellow-500 font-medium text-xs bg-white/80 dark:bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm border border-slate-200 dark:border-0">{t('simulator.insertCoinLabel')}</span>
                     </div>
                   </motion.button>
                   
@@ -402,7 +424,7 @@ const Simulator = () => {
                         </motion.div>
                       </motion.div>
                       
-                      <span className="mt-2 text-red-500 dark:text-red-400 font-medium text-xs bg-white/80 dark:bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm border border-slate-200 dark:border-0">拉動操作桿</span>
+                      <span className="mt-2 text-red-500 dark:text-red-400 font-medium text-xs bg-white/80 dark:bg-slate-900/80 px-2 py-1 rounded-full backdrop-blur-sm border border-slate-200 dark:border-0">{t('simulator.pullLever')}</span>
                     </div>
                   </motion.button>
                 </div>
@@ -435,9 +457,9 @@ const Simulator = () => {
                         🎰
                       </motion.div>
                       <div>
-                        <h3 className="text-slate-800 dark:text-white font-bold">分析完成！</h3>
+                        <h3 className="text-slate-800 dark:text-white font-bold">{t('simulator.analysisComplete')}</h3>
                         <p className="text-slate-600 dark:text-slate-300 text-sm">
-                          AI已為您生成{marketScenarios.find(s => s.value === selectedScenario)?.label}市場下的最佳投資配置
+                          {getAnalysisCompleteText()}
                         </p>
                       </div>
                     </div>
@@ -448,7 +470,7 @@ const Simulator = () => {
                     animate={{ opacity: 1 }}
                     className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-cyan-400 dark:to-indigo-400 mb-4"
                   >
-                    AI推薦投資組合:
+                    {t('simulator.aiRecommendation')}
                   </motion.h3>
                   <div className="space-y-4">
                     {investmentRecommendations[selectedScenario as keyof typeof investmentRecommendations].map((asset, index) => (
@@ -476,9 +498,9 @@ const Simulator = () => {
                         💡
                       </motion.div>
                       <div>
-                        <h4 className="font-medium text-indigo-600 dark:text-cyan-400 mb-1">AI智能洞察</h4>
+                        <h4 className="font-medium text-indigo-600 dark:text-cyan-400 mb-1">{t('simulator.aiInsightTitle')}</h4>
                         <p className="text-sm text-slate-600 dark:text-slate-300">
-                          根據您選擇的{marketScenarios.find(s => s.value === selectedScenario)?.label}市場情境，AI推薦上述資產配置以平衡收益與風險。此策略考慮了當前市場波動性與長期增長潛力。
+                          {getInsightText()}
                         </p>
                       </div>
                     </div>

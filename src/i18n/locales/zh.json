@@ -1,0 +1,214 @@
+{
+  "navbar": {
+    "brand": "QuantaryX",
+    "products": "產品",
+    "vision": "願景",
+    "investors": "投資者",
+    "contact": "聯繫我們",
+    "requestDemo": "請求演示",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單"
+  },
+  "hero": {
+    "title": "為智慧投資者打造的下一代資產管理平台",
+    "subtitle": "結合AI智能分析、即時追蹤與自動化投資策略，為您的財富增長提供全方位解決方案",
+    "ctaButton": "開始免費試用",
+    "learnMore": "了解更多",
+    "features": {
+      "smartAnalysis": {
+        "title": "智慧資產分析",
+        "description": "AI強化的資產淨值趨勢預測與風險識別"
+      },
+      "autoOptimization": {
+        "title": "自動投資優化",
+        "description": "基於市場行為的AI驅動投資策略調整"
+      },
+      "dataIntegration": {
+        "title": "智能資料整合",
+        "description": "多源財務數據自動解析與關聯構建"
+      },
+      "opportunityIdentification": {
+        "title": "投資機會識別",
+        "description": "AI篩選高價值投資標的與市場時機"
+      }
+    },
+    "aiInsight": {
+      "title": "AI 洞察",
+      "performance": "基於您的歷史表現，建議在科技板塊增加",
+      "allocation": "15%配置",
+      "riskWarning": "當前市場波動性較高，建議謹慎操作"
+    },
+    "portfolioValue": "投資組合價值",
+    "monthlyGrowth": "月增長率",
+    "charts": {
+      "months": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+      "assetTypes": {
+        "stocks": "股票",
+        "bonds": "債券",
+        "realEstate": "不動產",
+        "alternative": "另類投資",
+        "cash": "現金"
+      },
+      "alternativeInvestments": {
+        "privateEquity": "私募股權",
+        "realEstateFunds": "房地產基金",
+        "hedgeFunds": "對沖基金",
+        "artCollections": "藝術品收藏",
+        "commodityFutures": "商品期貨"
+      }
+    }
+  },
+  "products": {
+    "title": "我們的產品",
+    "subtitle": "為不同需求的投資者提供量身定制的解決方案",
+    "finora": {
+      "title": "Finora",
+      "subtitle": "智能投資管理平台",
+      "description": "為個人投資者提供AI驅動的投資建議和自動化投資組合管理",
+      "features": ["AI投資建議", "風險評估", "自動再平衡"]
+    },
+    "wiselens": {
+      "title": "Wiselens",
+      "subtitle": "機構級資產分析",
+      "description": "為機構投資者提供深度資產分析和市場洞察",
+      "features": ["深度分析", "市場洞察", "風險管理"]
+    },
+    "nurocrm": {
+      "title": "NuroCRM",
+      "subtitle": "客戶關係管理",
+      "description": "為財務顧問提供智能客戶關係管理和投資追蹤",
+      "features": ["客戶管理", "投資追蹤", "報告生成"]
+    },
+    "deallens": {
+      "title": "DealLens",
+      "subtitle": "交易分析平台",
+      "description": "為交易員提供即時市場分析和交易信號",
+      "features": ["即時分析", "交易信號", "市場數據"]
+    },
+    "requestDemo": "請求產品演示"
+  },
+  "vision": {
+    "title": "我們的願景",
+    "subtitle": "改變金融科技的未來",
+    "description": "QuantaryX致力於通過創新的AI技術和直觀的用戶體驗，讓每個人都能輕鬆管理和增長財富",
+    "values": {
+      "innovation": {
+        "title": "創新驅動",
+        "description": "持續推動金融科技的邊界"
+      },
+      "security": {
+        "title": "安全第一",
+        "description": "採用最高級別的安全標準"
+      },
+      "transparency": {
+        "title": "透明誠信",
+        "description": "為客戶提供完全透明的服務"
+      }
+    }
+  },
+  "investors": {
+    "title": "投資者關係",
+    "subtitle": "與我們一起成長",
+    "description": "QuantaryX正在尋求戰略投資夥伴，共同建設金融科技的未來",
+    "stats": {
+      "users": "活躍用戶",
+      "assets": "管理資產",
+      "growth": "年增長率",
+      "satisfaction": "客戶滿意度"
+    }
+  },
+  "footer": {
+    "description": "為高資產個人與專業投資者提供全方位的資產可視化、智能決策與自動化執行平台。",
+    "sections": {
+      "products": "產品",
+      "company": "公司",
+      "contact": "聯繫我們"
+    },
+    "company": {
+      "aboutUs": "關於我們",
+      "team": "團隊",
+      "investorRelations": "投資者關係"
+    },
+    "contact": {
+      "email": "info@quantaryx.com",
+      "phone": "+852 3757 9783"
+    },
+    "legal": {
+      "copyright": "版權所有。",
+      "privacy": "隱私政策",
+      "terms": "服務條款",
+      "security": "安全性"
+    }
+  },
+  "pages": {
+    "notFound": {
+      "title": "頁面未找到",
+      "description": "抱歉，您訪問的頁面不存在。",
+      "backHome": "返回首頁"
+    }
+  },
+  "realTimeTracking": {
+    "title": "即時追蹤",
+    "portfolioValue": "投資組合價值",
+    "currentValue": "$5,950,000",
+    "change": "+$520,000 (+9.6%)",
+    "timeRange": "今日",
+    "performance": {
+      "title": "表現分析",
+      "dailyGain": "今日收益",
+      "totalReturn": "總回報",
+      "volatility": "波動率"
+    }
+  },
+  "automatedTrading": {
+    "title": "自動化交易",
+    "subtitle": "AI驅動的智能交易系統",
+    "strategyPerformance": "策略表現",
+    "manual": "手動交易",
+    "automated": "AI自動化",
+    "tradingExecution": "交易執行記錄",
+    "riskControl": "風險控制",
+    "systemStatus": "系統狀態",
+    "executionCount": "執行次數",
+    "metrics": {
+      "volatilityReduction": "波動率降低",
+      "maxDrawdown": "最大回撤",
+      "sharpeRatio": "夏普比率",
+      "winRate": "勝率"
+    },
+    "actions": {
+      "buy": "買入",
+      "sell": "賣出",
+      "rebalance": "再平衡",
+      "stopLoss": "止損"
+    }
+  },
+  "cta": {
+    "title": "準備開始您的智能投資之旅？",
+    "subtitle": "立即體驗QuantaryX的強大功能，讓AI為您的財富增長賦能",
+    "requestDemo": "請求產品演示",
+    "startTrial": "開始免費試用",
+    "contactSales": "聯繫銷售團隊"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "錯誤",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "確認",
+    "save": "保存",
+    "edit": "編輯",
+    "delete": "刪除",
+    "view": "查看",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "close": "關閉",
+    "open": "打開"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "切換語言"
+  }
+} 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { TrendingUp, TrendingDown, AlertTriangle, Brain, Activity, DollarSign, BarChart3 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // 实时投资组合数据
 const portfolioPerformance = [
@@ -73,6 +74,7 @@ const assetImpacts = [
 ];
 
 const RealTimeTracking = () => {
+  const { t } = useTranslation();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeMetric, setActiveMetric] = useState('portfolio');
 
@@ -109,7 +111,7 @@ const RealTimeTracking = () => {
       <div className="flex justify-between items-center mb-3">
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="text-xs font-medium">實時監控</span>
+          <span className="text-xs font-medium">{t('realTimeMonitoring')}</span>
           <span className="text-xs text-gray-500 dark:text-gray-400">{currentTime.toLocaleTimeString('zh-TW', { hour12: false })}</span>
         </div>
         <div className="text-right">
@@ -142,7 +144,7 @@ const RealTimeTracking = () => {
             />
             <YAxis hide />
             <Tooltip 
-              formatter={(value, name) => [`$${Number(value).toLocaleString()}`, '投資組合價值']}
+              formatter={(value, name) => [`$${Number(value).toLocaleString()}`, t('portfolioValue')]}
               labelStyle={{ color: 'var(--tooltip-text)', fontWeight: 'bold', fontSize: '12px' }}
               itemStyle={{ color: 'var(--tooltip-text)', fontWeight: 'bold', fontSize: '12px' }}
               contentStyle={{ 

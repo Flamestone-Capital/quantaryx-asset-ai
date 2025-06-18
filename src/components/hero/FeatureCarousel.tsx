@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 import { advancedFeatures } from './constants';
 import { FeatureItem } from './types';
+import { useTranslation } from 'react-i18next';
 
 interface FeatureCarouselProps {
   selectedFeature: FeatureItem | null;
@@ -17,14 +18,16 @@ const FeatureCarousel = ({
   setSelectedFeature,
   renderChart
 }: FeatureCarouselProps) => {
+  const { t } = useTranslation();
+  
   return (
     <div>
       <div className="text-center mb-10">
         <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-4">
-          QuantaryX 核心 AI 功能
+          {t('hero.advancedFeatures.title')}
         </h2>
         <p className="text-gray-600 max-w-3xl mx-auto">
-          滑動卡片探索我們如何運用人工智能重新定義財富管理體驗
+          {t('hero.advancedFeatures.subtitle')}
         </p>
       </div>
       
@@ -51,12 +54,12 @@ const FeatureCarousel = ({
                   <CardHeader>
                     <div className="flex items-center mb-2">
                       {feature.icon}
-                      <CardTitle className="ml-3 text-lg">{feature.title}</CardTitle>
+                      <CardTitle className="ml-3 text-lg">{t(feature.title)}</CardTitle>
                     </div>
-                    <CardDescription>{feature.description}</CardDescription>
+                    <CardDescription>{t(feature.description)}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 text-sm line-clamp-2">{feature.details}</p>
+                    <p className="text-gray-600 text-sm line-clamp-2">{t(feature.details)}</p>
                   </CardContent>
                   <CardFooter>
                     <Button 
@@ -64,7 +67,7 @@ const FeatureCarousel = ({
                       size="sm" 
                       className="text-quantaryx-purple mt-2 px-0"
                     >
-                      了解更多 <ArrowRight className="ml-1 h-4 w-4" />
+                      {t('hero.learnMore')} <ArrowRight className="ml-1 h-4 w-4" />
                     </Button>
                   </CardFooter>
                 </Card>
@@ -84,7 +87,7 @@ const FeatureCarousel = ({
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
               {selectedFeature.icon}
-              <h3 className="ml-3 font-bold text-xl">{selectedFeature.title}</h3>
+              <h3 className="ml-3 font-bold text-xl">{t(selectedFeature.title)}</h3>
             </div>
             <Button 
               variant="ghost" 
@@ -92,60 +95,52 @@ const FeatureCarousel = ({
               onClick={() => setSelectedFeature(null)}
               className="text-gray-500"
             >
-              關閉
+              {t('common.close')}
             </Button>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
               <div className="mb-6">
-                <h4 className="font-medium mb-2">功能詳情</h4>
-                <p className="text-gray-700">{selectedFeature.details}</p>
+                <h4 className="font-medium mb-2">{t('hero.featureDetails')}</h4>
+                <p className="text-gray-700">{t(selectedFeature.details)}</p>
               </div>
               
               <div className="mb-6">
                 <h4 className="font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-quantaryx-purple rounded-full mr-2"></span>
-                  獲取優勢
+                  {t('hero.getAdvantage')}
                 </h4>
                 <p className="text-gray-700 text-sm border-l-2 border-quantaryx-purple/30 pl-3 py-1">
-                  {selectedFeature.uniqueFeature}
+                  {t(selectedFeature.uniqueFeature)}
                 </p>
               </div>
               
               <h4 className="font-medium mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2 text-quantaryx-purple"><path d="M21 8v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"></path><path d="M13 16L9.14 11.14a2 2 0 0 1 0-2.83L13 5"></path></svg>
-                AI 驅動能力
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2 text-quantaryx-purple"><path d="M21 8v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2 2Z"></path><path d="M13 16L9.14 11.14a2 2 0 0 1 0-2.83L13 5"></path></svg>
+                {t('hero.aiCapabilities')}
               </h4>
-              
-              {/* <ScrollArea className="h-[180px] border rounded p-2">
-                <ul className="space-y-2">
-                  {selectedFeature.capabilities.map((capability, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="h-5 w-5 rounded-full flex items-center justify-center mt-0.5 mr-2 bg-quantaryx-purple/10 text-quantaryx-purple">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-3 w-3">
-                          <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                      </span>
-                      <span className="text-sm">{capability}</span>
-                    </li>
-                  ))}
-                </ul>
-              </ScrollArea> */}
+              <ul className="text-sm text-gray-600 space-y-2">
+                {selectedFeature.capabilities.map((capability, index) => (
+                  <li key={index} className="flex items-start">
+                    <span className="inline-block w-1.5 h-1.5 bg-quantaryx-purple rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
+                    {t(capability)}
+                  </li>
+                ))}
+              </ul>
             </div>
             
             <div>
-              {/* <div className="h-64 bg-gray-50 rounded-lg p-4 mb-4">
+              <div className="h-64 bg-gray-50 rounded-lg mb-4 flex items-center justify-center">
                 {renderChart(selectedFeature.chartType)}
-              </div> */}
-              
+              </div>
               <div className="mt-3 p-4 bg-quantaryx-softblue/20 rounded-lg border border-quantaryx-softblue/30 animate-fade-in">
                 <div className="flex items-center mb-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-quantaryx-purple mr-2"><path d="M21 8v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"></path><path d="M13 16L9.14 11.14a2 2 0 0 1 0-2.83L13 5"></path></svg>
-                  <span className="text-sm font-medium text-quantaryx-darkblue">AI 智能洞察</span>
+                  <span className="text-sm font-medium text-quantaryx-darkblue">{t('hero.aiInsight.title')}</span>
                 </div>
                 <p className="text-sm text-gray-600">
-                  {selectedFeature.aiInsight}
+                  {t(selectedFeature.aiInsight)}
                 </p>
               </div>
             </div>

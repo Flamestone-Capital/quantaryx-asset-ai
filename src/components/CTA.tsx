@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, X, Tag } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
@@ -6,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 
 const PricingPopup = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
+  
   if (!isOpen) return null;
   
   return createPortal(
@@ -37,14 +40,14 @@ const PricingPopup = ({ isOpen, onClose }) => {
               <Tag className="h-8 w-8" />
             </div>
             
-            <h3 className="text-2xl font-bold mb-4 text-center dark:text-white">定價方案</h3>
+            <h3 className="text-2xl font-bold mb-4 text-center dark:text-white">{t('cta.pricing.title')}</h3>
             <p className="text-xl mb-6 text-center text-gray-600 dark:text-gray-300">
-              即將上線，敬請期待
+              {t('cta.pricing.comingSoon')}
             </p>
             
             <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
               <p className="text-sm text-gray-600 dark:text-gray-300 text-center">
-                我們正在為不同規模的客戶打造靈活的訂閱方案。請填寫聯繫表單以獲取最新定價信息。
+                {t('cta.pricing.description')}
               </p>
             </div>
           </motion.div>
@@ -56,12 +59,13 @@ const PricingPopup = ({ isOpen, onClose }) => {
 };
 
 const CTA = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [showPricingPopup, setShowPricingPopup] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    type: '高淨值個人',
+    type: t('cta.form.options.individual'),
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -82,15 +86,15 @@ const CTA = () => {
     setTimeout(() => {
       setIsSubmitting(false);
       toast({
-        title: "表單提交成功",
-        description: "我們已收到您的信息，將盡快與您聯系",
+        title: t('cta.toast.formSuccess.title'),
+        description: t('cta.toast.formSuccess.description'),
       });
       
       // Reset form
       setFormData({
         name: '',
         email: '',
-        type: '高淨值個人',
+        type: t('cta.form.options.individual'),
         message: ''
       });
     }, 1000);
@@ -99,8 +103,8 @@ const CTA = () => {
   const handleDemoRequest = () => {
     // 显示提示信息，引导用户填写表格
     toast({
-      title: "請求產品演示",
-      description: "請先填寫右側表格的聯繫信息，我們將安排專屬演示",
+      title: t('cta.toast.demoRequest.title'),
+      description: t('cta.toast.demoRequest.description'),
       duration: 4000,
     });
     
@@ -124,17 +128,17 @@ const CTA = () => {
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
           <div className="mb-10 lg:mb-0">
             <h2 className="text-3xl font-bold mb-6 text-left">
-              準備好 <span className="text-gradient">重新定義</span> 你的資產管理方式了嗎？
+              {t('cta.title')}
             </h2>
             <p className="text-xl mb-8 text-gray-500 text-left">
-              無論您是高資產個人、家族辦公室、還是專業投資機構，QuantaryX 都能為您提供前所未有的資產掌控體驗。
+              {t('cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 onClick={handleDemoRequest}
                 className="bg-quantaryx-purple hover:bg-quantaryx-purple/90 text-white flex items-center gap-2"
               >
-                請求產品演示
+                {t('cta.requestDemo')}
                 <ArrowRight className="h-4 w-4" />
               </Button>
               <Button 
@@ -142,18 +146,18 @@ const CTA = () => {
                 variant="outline" 
                 className="border-quantaryx-darkblue text-quantaryx-darkblue hover:bg-quantaryx-darkblue/10"
               >
-                了解定價
+                {t('cta.learnPricing')}
               </Button>
             </div>
           </div>
           
           <div className="lg:pl-10">
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <h3 className="text-xl font-bold mb-6 text-left">聯繫我們</h3>
+              <h3 className="text-xl font-bold mb-6 text-left">{t('cta.contactUs')}</h3>
               
               <form id="contact-form" className="space-y-4" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 text-left mb-1">姓名</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 text-left mb-1">{t('cta.form.name')}</label>
                   <input
                     type="text"
                     id="name"
@@ -162,12 +166,12 @@ const CTA = () => {
                     onChange={handleChange}
                     required
                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-quantaryx-purple focus:ring focus:ring-quantaryx-purple/20 transition-colors p-2 border"
-                    placeholder="您的姓名"
+                    placeholder={t('cta.form.namePlaceholder')}
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 text-left mb-1">電子郵件</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 text-left mb-1">{t('cta.form.email')}</label>
                   <input
                     type="email"
                     id="email"
@@ -176,12 +180,12 @@ const CTA = () => {
                     onChange={handleChange}
                     required
                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-quantaryx-purple focus:ring focus:ring-quantaryx-purple/20 transition-colors p-2 border"
-                    placeholder="您的電子郵件"
+                    placeholder={t('cta.form.emailPlaceholder')}
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="type" className="block text-sm font-medium text-gray-700 text-left mb-1">您是</label>
+                  <label htmlFor="type" className="block text-sm font-medium text-gray-700 text-left mb-1">{t('cta.form.type')}</label>
                   <select
                     id="type"
                     name="type"
@@ -189,16 +193,16 @@ const CTA = () => {
                     onChange={handleChange}
                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-quantaryx-purple focus:ring focus:ring-quantaryx-purple/20 transition-colors p-2 border"
                   >
-                    <option>高淨值個人</option>
-                    <option>家族辦公室</option>
-                    <option>資產管理專業人士</option>
-                    <option>投資者</option>
-                    <option>其他</option>
+                    <option>{t('cta.form.options.individual')}</option>
+                    <option>{t('cta.form.options.family')}</option>
+                    <option>{t('cta.form.options.professional')}</option>
+                    <option>{t('cta.form.options.investor')}</option>
+                    <option>{t('cta.form.options.other')}</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 text-left mb-1">訊息</label>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 text-left mb-1">{t('cta.form.message')}</label>
                   <textarea
                     id="message"
                     name="message"
@@ -207,7 +211,7 @@ const CTA = () => {
                     onChange={handleChange}
                     required
                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-quantaryx-purple focus:ring focus:ring-quantaryx-purple/20 transition-colors p-2 border"
-                    placeholder="請告訴我們您的需求"
+                    placeholder={t('cta.form.messagePlaceholder')}
                   ></textarea>
                 </div>
                 
@@ -216,7 +220,7 @@ const CTA = () => {
                   className="w-full bg-quantaryx-darkblue hover:bg-quantaryx-darkblue/90"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? '提交中...' : '提交'}
+                  {isSubmitting ? t('cta.form.submitting') : t('cta.form.submit')}
                 </Button>
               </form>
             </div>

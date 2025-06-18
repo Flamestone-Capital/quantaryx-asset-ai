@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowUp, ArrowDown, Check, TrendingUp, AlertCircle, Clock, DollarSign, BarChart3, Tag } from 'lucide-react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 // 生成模拟K线数据
 const generateCandlestickData = (count: number) => {
@@ -108,6 +109,7 @@ const CountUp = ({ from, to, duration = 1.2, decimals = 2, delay = 0 }: { from: 
 };
 
 const EnhancedTradingSignalBoard = () => {
+  const { t } = useTranslation();
   const [candlestickData, setCandlestickData] = useState<any[]>([]);
   const [showOrderConfirmation, setShowOrderConfirmation] = useState(false);
   const [activeSignalIndex, setActiveSignalIndex] = useState<number | null>(null);
@@ -267,7 +269,7 @@ const EnhancedTradingSignalBoard = () => {
           whileHover={{ scale: 1.02 }}
         >
           <BarChart3 size={18} className="text-blue-600 dark:text-blue-400 mr-1" />
-          <span className="text-gray-800 dark:text-white text-sm font-medium">AI 评分: </span>
+          <span className="text-gray-800 dark:text-white text-sm font-medium">{t('automatedTrading.aiScore')}: </span>
           <motion.span 
             className="text-gray-800 dark:text-white text-lg font-bold"
             initial={{ opacity: 0 }}
@@ -590,7 +592,7 @@ const EnhancedTradingSignalBoard = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.6 }}
                     >
-                      {candle.signal.type === 'buy' ? '买入' : '卖出'}
+                      {candle.signal.type === 'buy' ? t('automatedTrading.actions.buy') : t('automatedTrading.actions.sell')}
                     </motion.text>
                     
                     {/* 策略线和标签 */}
@@ -715,14 +717,14 @@ const EnhancedTradingSignalBoard = () => {
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center">
                     <Check size={10} className={`mr-1 ${orderDetails.type === 'buy' ? 'text-green-500' : 'text-red-500'}`} />
-                    <span className="font-bold text-gray-800 dark:text-white text-[10px]">交易已执行</span>
+                    <span className="font-bold text-gray-800 dark:text-white text-[10px]">{t('automatedTrading.executionCount')}</span>
                   </div>
                   <div className={`px-1 py-0.5 rounded-full text-[8px] font-medium ${
                     orderDetails.type === 'buy' 
                       ? 'bg-green-500/20 text-green-400' 
                       : 'bg-red-500/20 text-red-400'
                   }`}>
-                    {orderDetails.type === 'buy' ? '买入' : '卖出'}
+                    {orderDetails.type === 'buy' ? t('automatedTrading.actions.buy') : t('automatedTrading.actions.sell')}
                   </div>
                 </div>
                 
@@ -731,7 +733,7 @@ const EnhancedTradingSignalBoard = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <DollarSign size={8} className="mr-0.5 text-blue-600 dark:text-blue-400" />
-                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">价格:</span>
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">{t('common.price')}:</span>
                     </div>
                     <span className="text-gray-800 dark:text-white font-bold text-[9px]">
                       $<CountUp from={0} to={parseFloat(orderDetails.price)} delay={0.7} />
@@ -741,17 +743,17 @@ const EnhancedTradingSignalBoard = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <BarChart3 size={8} className="mr-0.5 text-purple-600 dark:text-purple-400" />
-                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">数量:</span>
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">{t('common.quantity')}:</span>
                     </div>
                     <span className="text-gray-800 dark:text-white font-bold text-[9px]">
-                      <CountUp from={0} to={parseFloat(orderDetails.quantity)} delay={0.8} /> 股
+                      <CountUp from={0} to={parseFloat(orderDetails.quantity)} delay={0.8} /> {t('common.shares')}
                     </span>
                   </div>
                   
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <DollarSign size={8} className={`mr-0.5 ${orderDetails.type === 'buy' ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400'}`} />
-                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">{orderDetails.type === 'buy' ? '总金额:' : '收益:'}</span>
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">{orderDetails.type === 'buy' ? t('common.totalAmount') : t('common.profit')}:</span>
                     </div>
                     <span className={`font-bold text-[9px] ${orderDetails.type === 'buy' ? 'text-gray-800 dark:text-white' : 'text-green-600 dark:text-green-400'}`}>
                       {orderDetails.type === 'buy' ? '$' : '+$'}<CountUp from={0} to={parseFloat(orderDetails.total)} decimals={1} delay={0.9} />
@@ -761,7 +763,7 @@ const EnhancedTradingSignalBoard = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <Clock size={8} className="mr-0.5 text-blue-600 dark:text-blue-400" />
-                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">时间:</span>
+                      <span className="text-gray-600 dark:text-gray-300 text-[9px]">{t('common.time')}:</span>
                     </div>
                     <span className="text-gray-800 dark:text-white text-[9px]">
                       {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})}
@@ -773,7 +775,7 @@ const EnhancedTradingSignalBoard = () => {
                 <div className="flex items-center justify-between mt-1 mb-1">
                   <div className="flex items-center">
                     <TrendingUp size={8} className="mr-0.5 text-purple-600 dark:text-purple-400" />
-                    <span className="text-gray-600 dark:text-gray-300 text-[9px]">策略:</span>
+                    <span className="text-gray-600 dark:text-gray-300 text-[9px]">{t('automatedTrading.strategyPerformance')}:</span>
                   </div>
                   <span className="text-gray-800 dark:text-white font-bold text-[9px]">
                     {candlestickData[activeSignalIndex]?.signal?.strategy || 'AI Strategy'}
@@ -783,7 +785,7 @@ const EnhancedTradingSignalBoard = () => {
                 {/* 底部提示 */}
                 <div className="flex items-center mt-1 text-[8px] text-gray-500 dark:text-gray-400">
                   <AlertCircle size={7} className="mr-0.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-                  <span>AI 已根据{candlestickData[activeSignalIndex]?.signal?.strategy || '市场信号'}自动执行交易</span>
+                  <span>{t('automatedTrading.systemStatus')}</span>
                 </div>
               </div>
             </motion.div>

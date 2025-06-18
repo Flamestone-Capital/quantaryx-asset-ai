@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Partners = () => {
+  const { t } = useTranslation();
+  
   // 合作伙伴数据 - 支持多种图片格式
   const partners = [
     {
@@ -37,7 +40,7 @@ const Partners = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <h2 className="text-3xl font-bold text-center text-slate-800 dark:text-white mb-12">
-          合作夥伴
+          {t('partners.title')}
         </h2>
         
         <div className="relative">

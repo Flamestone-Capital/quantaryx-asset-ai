@@ -367,8 +367,17 @@ const Simulator = () => {
                         <div className="absolute inset-2 rounded-full bg-gradient-to-b from-yellow-300 to-yellow-500 opacity-80"></div>
                         <div className="absolute inset-0 rounded-full shadow-[inset_0_0_15px_rgba(0,0,0,0.5)]"></div>
                         
-                        <div className="relative z-10 font-bold text-yellow-900 text-lg">
-                          {hasInsertedCoin ? "✓" : t('simulator.insertCoin')}
+                        <div className="relative z-10 font-bold text-yellow-900 text-sm flex flex-col items-center justify-center leading-tight">
+                          {hasInsertedCoin ? (
+                            "✓"
+                          ) : i18n.language === 'zh' ? (
+                            <>
+                              <div>投入</div>
+                              <div>代币</div>
+                            </>
+                          ) : (
+                            <div className="text-xs">{t('simulator.insertCoin')}</div>
+                          )}
                         </div>
                         
                         {hasInsertedCoin && (

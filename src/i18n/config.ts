@@ -67,7 +67,7 @@ const zhTranslations = {
         "realEstateFunds": "房地產基金",
         "hedgeFunds": "對沖基金",
         "artCollections": "藝術品收藏",
-        "commodityFutures": "商品期貨"
+        "commodityFutures": "加密貨幣"
       },
       "tooltips": {
         "percentage": "占比",
@@ -823,7 +823,7 @@ const enTranslations = {
         "realEstateFunds": "Real Estate Funds",
         "hedgeFunds": "Hedge Funds",
         "artCollections": "Art Collections",
-        "commodityFutures": "Commodities"
+        "commodityFutures": "Cryptocurrency"
       },
       "tooltips": {
         "percentage": "Percentage",

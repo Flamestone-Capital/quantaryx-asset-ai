@@ -220,7 +220,39 @@ const Hero = () => {
               fill="#8884d8"
               paddingAngle={5}
               dataKey="value"
-              label={({name, percent}) => `${name} ${(percent * 100).toFixed(0)}%`}
+              label={({name, percent}) => {
+                // 智能处理长标签文本，支持中英文
+                let displayName = name;
+                
+                // 英文标签处理
+                if (name === 'Real Estate Funds') {
+                  displayName = 'RE Funds';
+                } else if (name === 'Art Collections') {
+                  displayName = 'Art Collect.';
+                } else if (name === 'Private Equity') {
+                  displayName = 'Priv. Equity';
+                } else if (name === 'Hedge Funds') {
+                  displayName = 'Hedge Funds';
+                } else if (name === 'Cryptocurrency') {
+                  displayName = 'Crypto';
+                }
+                
+                // 中文标签处理
+                else if (name === '房地產基金') {
+                  displayName = '房產基金';
+                } else if (name === '藝術品收藏') {
+                  displayName = '藝術收藏';
+                } else if (name === '私募股權') {
+                  displayName = '私募股權';
+                } else if (name === '對沖基金') {
+                  displayName = '對沖基金';
+                } else if (name === '加密貨幣') {
+                  displayName = '加密貨幣';
+                }
+                
+                return `${displayName} ${(percent * 100).toFixed(0)}%`;
+              }}
+              labelLine={false}
             >
               {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

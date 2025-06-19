@@ -18,6 +18,7 @@ import DataIntegrationVisual from './DataIntegrationVisual';
 import EnhancedTradingSignalBoard from './EnhancedTradingSignalBoard';
 import RealTimeTracking from './RealTimeTracking';
 import AutomatedTrading from './AutomatedTrading';
+import SmartAssetAnalysis from './SmartAssetAnalysis';
 import { useTranslation } from 'react-i18next';
 
 // 实时跟踪专用数据 - 显示日内价格波动
@@ -72,13 +73,14 @@ const COLORS = ['#9b87f5', '#33C3F0', '#FF8042', '#7E69AB', '#1EAEDB'];
 
 const Hero = () => {
   const [activeFeature, setActiveFeature] = useState(0);
-  const [showAIInsight, setShowAIInsight] = useState(false);
+  const [showAIInsight, setShowAIInsight] = useState(true);
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [showSimulator, setShowSimulator] = useState(false);
   const [chartType, setChartType] = useState('bar'); // 'bar', 'line', 'pie', 'advanced'
   const [showDataIntegration, setShowDataIntegration] = useState(false);
   const [showRealTimeTracking, setShowRealTimeTracking] = useState(false);
   const [showAutomatedTrading, setShowAutomatedTrading] = useState(false);
+  const [showSmartAssetAnalysis, setShowSmartAssetAnalysis] = useState(true);
   const { t } = useTranslation();
 
   // 生成翻译后的图表数据
@@ -152,11 +154,12 @@ const Hero = () => {
     setShowDataIntegration(false);
     setShowRealTimeTracking(false);
     setShowAutomatedTrading(false);
+    setShowSmartAssetAnalysis(false);
     
     // Change chart type based on the selected feature
     switch(index) {
       case 0: // 智慧資產分析
-        setChartType('bar');
+        setShowSmartAssetAnalysis(true);
         break;
       case 1: // 自動投資優化
         setShowSimulator(true);
@@ -378,6 +381,10 @@ const Hero = () => {
                 ) : showAutomatedTrading ? (
                   <div className="w-full h-[450px]">
                     <AutomatedTrading />
+                  </div>
+                ) : showSmartAssetAnalysis ? (
+                  <div className="w-full h-[450px]">
+                    <SmartAssetAnalysis />
                   </div>
                 ) : (
                   <div className="w-full h-[450px] bg-gradient-to-br from-quantaryx-purple/50 to-quantaryx-brightblue/30 dark:from-quantaryx-dark-purple/40 dark:to-quantaryx-dark-blue/30 rounded-lg p-6">

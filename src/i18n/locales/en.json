@@ -130,8 +130,9 @@
       "investorRelations": "Investor Relations"
     },
     "contact": {
-      "email": "info@quantaryx.com",
-      "phone": "+852 3757 9783"
+      "email": "info@quantaryx.ai",
+      "phone": "+852 3757 9783",
+      "emailLabel": "Email"
     },
     "legal": {
       "copyright": "All rights reserved.",

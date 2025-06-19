@@ -278,7 +278,7 @@ const zhTranslations = {
       "investorRelations": "投資者關係"
     },
     "contact": {
-      "email": "info@quantaryx.com",
+      "email": "info@quantaryx.ai",
       "phone": "+852 3757 9783",
       "emailLabel": "Email"
     },
@@ -363,7 +363,7 @@ const zhTranslations = {
       "contact": {
         "title": "聯繫我們",
         "description": "如果您對此隱私政策有任何疑問或想要行使您的權利，請通過以下方式聯繫我們：",
-        "email": "privacy@quantaryx.com"
+        "email": "privacy@quantaryx.ai"
       }
     },
     "termsOfService": {
@@ -464,8 +464,8 @@ const zhTranslations = {
         "description": "如果您對這些服務條款有任何疑問，請聯繫我們：",
         "legal": "法務部門：",
         "support": "客戶服務：",
-        "legalEmail": "legal@quantaryx.com",
-        "supportEmail": "support@quantaryx.com"
+        "legalEmail": "legal@quantaryx.ai",
+        "supportEmail": "support@quantaryx.ai"
       }
     },
     "security": {
@@ -569,7 +569,7 @@ const zhTranslations = {
       "contact": {
         "title": "安全問題報告",
         "description": "如果您發現任何安全漏洞或有安全相關問題，請立即聯繫我們的安全團隊：",
-        "email": "security@quantaryx.com"
+        "email": "security@quantaryx.ai"
       }
     }
   },
@@ -1034,7 +1034,7 @@ const enTranslations = {
       "investorRelations": "Investor Relations"
     },
     "contact": {
-      "email": "info@quantaryx.com",
+      "email": "info@quantaryx.ai",
       "phone": "+852 3757 9783",
       "emailLabel": "Email"
     },
@@ -1119,7 +1119,7 @@ const enTranslations = {
       "contact": {
         "title": "Contact Us",
         "description": "If you have any questions or want to exercise your rights, please contact us via the following methods:",
-        "email": "privacy@quantaryx.com"
+        "email": "privacy@quantaryx.ai"
       }
     },
     "termsOfService": {
@@ -1220,8 +1220,8 @@ const enTranslations = {
         "description": "If you have any questions about these terms of service, please contact us:",
         "legal": "Legal Department:",
         "support": "Customer Service:",
-        "legalEmail": "legal@quantaryx.com",
-        "supportEmail": "support@quantaryx.com"
+        "legalEmail": "legal@quantaryx.ai",
+        "supportEmail": "support@quantaryx.ai"
       }
     },
     "security": {
@@ -1325,7 +1325,7 @@ const enTranslations = {
       "contact": {
         "title": "Security Issue Reporting",
         "description": "If you discover any security vulnerabilities or have security-related issues, please contact our security team immediately:",
-        "email": "security@quantaryx.com"
+        "email": "security@quantaryx.ai"
       }
     }
   },
